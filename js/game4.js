@@ -7,20 +7,19 @@ window.startLevel4 = function() {
     const TOTAL_PIECES = GRID_SIZE * GRID_SIZE; 
     let correctPiecesCount = 0;
 
-    // Reset Awal Area Game
+    // Reset Awal Area Game secara bersih
     puzzleBoard.innerHTML = '';
     scatteredArea.innerHTML = '';
     if (backToJourneyBtn4) backToJourneyBtn4.classList.add('hidden');
     puzzleBoard.style.opacity = '1'; 
     correctPiecesCount = 0;
 
-    // 1. Buat 36 Slot Target Drop
+    // 1. Buat 36 Slot Target Drop secara presisi
     for (let i = 0; i < TOTAL_PIECES; i++) {
         const slot = document.createElement('div');
         slot.classList.add('puzzle-slot');
         slot.dataset.correctId = i; 
 
-        // Daftarkan event drag agar drop selalu diizinkan dengan lancar
         slot.addEventListener('dragenter', (e) => e.preventDefault());
         slot.addEventListener('dragover', (e) => e.preventDefault());
         slot.addEventListener('drop', handleDrop);
@@ -28,14 +27,17 @@ window.startLevel4 = function() {
         puzzleBoard.appendChild(slot);
     }
 
-    // 2. Buat ID Kepingan lalu acak urutannya
-    const piecesData = Array.from({ length: TOTAL_PIECES }, (_, i) => i);
+    // 2. FIX: Buat array ID (0 - 35) dan kunci urutannya setelah di-shuffle secara murni
+    const piecesData = [];
+    for (let i = 0; i < TOTAL_PIECES; i++) {
+        piecesData.push(i);
+    }
     shuffle(piecesData);
 
     const boardWidth = puzzleBoard.offsetWidth || 360;
     const pieceSize = boardWidth / GRID_SIZE;
 
-    // 3. Render Kepingan ke Area Berserakan
+    // 3. Render Kepingan Unik ke Area Berserakan
     piecesData.forEach((pieceId) => {
         const piece = document.createElement('div');
         piece.classList.add('puzzle-piece-jigsaw');
@@ -43,7 +45,7 @@ window.startLevel4 = function() {
         piece.id = `piece-${pieceId}`;
         piece.dataset.pieceId = pieceId;
 
-        // Kalkulasi background position potongan gambar asli
+        // Kalkulasi posisi gambar latar belakang asli
         const r = Math.floor(pieceId / GRID_SIZE);
         const c = pieceId % GRID_SIZE;
         const bgX = -(c * pieceSize);
@@ -52,6 +54,7 @@ window.startLevel4 = function() {
 
         // --- EVENT FOR DESKTOP (DRAG & DROP) ---
         piece.addEventListener('dragstart', (e) => {
+            if (piece.getAttribute('draggable') === 'false') return;
             e.dataTransfer.setData('text/plain', e.target.id);
             e.dataTransfer.dropEffect = 'move';
             setTimeout(() => e.target.classList.add('dragging'), 0);
@@ -61,20 +64,17 @@ window.startLevel4 = function() {
             e.target.classList.remove('dragging');
         });
 
-        // --- FIX CRUCIAL: EVENT FOR MOBILE TOUCH (INSTANT TOUCH & MOVE) ---
+        // --- EVENT FOR MOBILE TOUCH (ANTI DUPLIKASI & FREEZE) ---
         piece.addEventListener('touchstart', (e) => {
-            // Hanya proses jika elemen masih bisa dipindahkan
             if (piece.getAttribute('draggable') === 'false') return;
             
-            e.preventDefault(); // Kunci scroll layar HP saat potongan disentuh
+            e.preventDefault(); 
             piece.classList.add('dragging');
             
-            // Simpan posisi awal sentuhan jari relatif terhadap kepingan
             const touch = e.touches[0];
             piece.dataset.touchOffsetX = touch.clientX - piece.getBoundingClientRect().left;
             piece.dataset.touchOffsetY = touch.clientY - piece.getBoundingClientRect().top;
             
-            // Buat kepingan melayang mengikuti jari di layar
             piece.style.position = 'fixed';
             piece.style.zIndex = '1000';
             piece.style.left = (touch.clientX - piece.dataset.touchOffsetX) + 'px';
@@ -83,7 +83,7 @@ window.startLevel4 = function() {
 
         piece.addEventListener('touchmove', (e) => {
             if (!piece.classList.contains('dragging')) return;
-            e.preventDefault(); // Cegah layar ikut ke-scroll saat menyeret kepingan
+            e.preventDefault();
             
             const touch = e.touches[0];
             piece.style.left = (touch.clientX - piece.dataset.touchOffsetX) + 'px';
@@ -94,25 +94,28 @@ window.startLevel4 = function() {
             if (!piece.classList.contains('dragging')) return;
             piece.classList.remove('dragging');
             
+            // Kembalikan style CSS melayang ke bentuk semula
             piece.style.position = '';
             piece.style.zIndex = '';
             piece.style.left = '';
             piece.style.top = '';
 
-            // Cari elemen slot target berdasarkan koordinat lepasnya jari di layar HP
             const touch = e.changedTouches[0];
             const dropTarget = document.elementFromPoint(touch.clientX, touch.clientY);
             
-            if (!dropTarget) return;
+            if (!dropTarget) {
+                scatteredArea.appendChild(piece);
+                return;
+            }
 
-            // Cari element slot terdekat (entah menyentuh kotak slot langsung atau kepingan di dalamnya)
-            let targetSlot = dropTarget.closest('.puzzle-slot');
+            const targetSlot = dropTarget.closest('.puzzle-slot');
             
             if (targetSlot) {
                 const slotCorrectId = targetSlot.dataset.correctId;
                 const pId = piece.dataset.pieceId;
 
-                if (slotCorrectId === pId) {
+                // Cek apakah slot tersebut sudah diisi kepingan lain atau belum
+                if (slotCorrectId === pId && targetSlot.children.length === 0) {
                     targetSlot.appendChild(piece);
                     piece.setAttribute('draggable', 'false');
                     
@@ -124,10 +127,10 @@ window.startLevel4 = function() {
                     }
                 } else {
                     if (navigator.vibrate) navigator.vibrate([40, 20]);
-                    scatteredArea.appendChild(piece); // Kembalikan ke tempat asal jika salah letak
+                    scatteredArea.appendChild(piece); 
                 }
             } else {
-                scatteredArea.appendChild(piece); // Kembalikan ke tempat asal jika dilepas di luar slot
+                scatteredArea.appendChild(piece); 
             }
         });
 
@@ -151,8 +154,8 @@ window.startLevel4 = function() {
         const slotCorrectId = targetSlot.dataset.correctId;
         const pieceId = draggedPiece.dataset.pieceId;
 
-        // VALIDASI: Cocokkan ID Kepingan dengan ID Slot Target
-        if (slotCorrectId === pieceId) {
+        // Validasi ID cocok & slot target masih kosong melompong
+        if (slotCorrectId === pieceId && targetSlot.children.length === 0) {
             targetSlot.appendChild(draggedPiece);
             draggedPiece.setAttribute('draggable', 'false');
             draggedPiece.classList.remove('dragging'); 
@@ -184,7 +187,6 @@ window.startLevel4 = function() {
             scatteredArea.innerHTML = ''; 
             scatteredArea.style.background = "none";
 
-            // Panggil fungsi modal global (Icon, Judul, Ucapan, Target Misi Berikutnya)
             if (typeof window.showGlobalGamePopup === 'function') {
                 window.showGlobalGamePopup(
                     "🤭", 
