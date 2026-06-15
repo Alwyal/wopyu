@@ -1,7 +1,7 @@
 window.startLevel1 = function() {
     let score = 0;
     let missed = 0;
-    const targetScore = 50; 
+    const targetScore = 66; 
     const maxMissed = 6;
     let gameInterval;
     let isGameOver = false;
@@ -67,11 +67,11 @@ window.startLevel1 = function() {
         let fallDuration;
         if (score < 11) {
             fallDuration = Math.random() * 1 + 2.5; 
-        } else if (score < 55) {
+        } else if (score < 22) {
             fallDuration = Math.random() * 0.8 + 2.0; 
-        } else if (score < 55) {
+        } else if (score < 33) {
             fallDuration = Math.random() * 0.6 + 1.6; 
-        } else if (score < 55) {
+        } else if (score < 44) {
             fallDuration = Math.random() * 0.5 + 1.2; 
         } else if (score < 55) {
             fallDuration = Math.random() * 0.4 + 0.9; 
