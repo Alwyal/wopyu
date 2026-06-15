@@ -378,7 +378,7 @@ window.showGlobalGamePopup = function(icon, title, message, nextLevel) {
 };
 
 // =========================================================================
-// GLOBAL CHEAT MANAGEMENT SYSTEM (KUSTOM MODAL + ANTI-MACET PC)
+// GLOBAL CHEAT MANAGEMENT SYSTEM 
 // =========================================================================
 window.isCheatUnlocked = false; // Status awal cheat terkunci
 
@@ -389,18 +389,22 @@ window.bukaAksesCheatGlobal = function() {
     const submitBtn = document.getElementById('submitPinBtn');
     const cancelBtn = document.getElementById('cancelPinBtn');
     
+    if (!pinModal || !pinInput || !submitBtn || !cancelBtn) return;
+
     // Selector komponen internal modal untuk mengubah konten secara dinamis
     const modalIcon = pinModal.querySelector('.maze-modal-icon');
     const modalTitle = pinModal.querySelector('h3');
     const modalText = pinModal.querySelector('p');
 
-    if (!pinModal || !pinInput) return;
-
-    // Jika cheat sudah aktif dan tombol gembok ditekan lagi
+    // --- KONDISI A: JIKA CHEAT SUDAH AKTIF ---
     if (window.isCheatUnlocked) {
-        modalIcon.innerText = "??";
-        modalTitle.innerText = "Sudah Aktif! ??";
-        modalText.innerText = "Status: Mode Developer sudah aktif, Alwy! Tinggal meluncur ke level game yaa~";
+        if (modalIcon) modalIcon.innerText = "??";
+        if (modalTitle) {
+            modalTitle.innerText = "Sudah Aktif! ??";
+            modalTitle.style.color = "#ff4d88";
+        }
+        if (modalText) modalText.innerText = "Status: Mode Developer sudah aktif, Alwy! Tinggal meluncur ke level game yaa~";
+        
         pinInput.style.display = 'none'; // Sembunyikan input karena sudah aktif
         submitBtn.style.display = 'none'; // Sembunyikan tombol verifikasi
         cancelBtn.innerText = "Oke Sayang ??"; // Ubah teks tombol batal jadi oke
@@ -410,11 +414,16 @@ window.bukaAksesCheatGlobal = function() {
         return;
     }
 
-    // Kembalikan tampilan modal ke mode input normal (jika sebelumnya habis eror/reset)
-    modalIcon.innerText = "??";
-    modalTitle.innerText = "Mode Developer";
-    modalText.innerText = "Masukkan PIN Rahasia Mas Alwy untuk membuka fitur rahasia:";
-    pinInput.style.style.display = 'block';
+    // --- KONDISI B: NORMAL INPUT (BELUM AKTIF) ---
+    // FIX UTAMA: Bersihkan typo .style.style dan kembalikan semua display ke normal (block/flex)
+    if (modalIcon) modalIcon.innerText = "??";
+    if (modalTitle) {
+        modalTitle.innerText = "Mode Developer";
+        modalTitle.style.color = "#ff4d88";
+    }
+    if (modalText) modalText.innerText = "Masukkan PIN Rahasia Mas Alwy untuk membuka fitur rahasia:";
+    
+    pinInput.style.display = 'block';
     submitBtn.style.display = 'block';
     cancelBtn.innerText = "Batal ??";
 
@@ -446,10 +455,13 @@ window.bukaAksesCheatGlobal = function() {
             window.isCheatUnlocked = true;
             
             // TAMPILKAN STATE SUKSES DI DALAM MODAL
-            modalIcon.innerText = "??";
-            modalTitle.style.color = "#00e676";
-            modalTitle.innerText = "Sukses! ???";
-            modalText.innerText = "Mode Cheat Berhasil Diaktifkan! Semua tombol skip di level game sudah terbuka.";
+            if (modalIcon) modalIcon.innerText = "??";
+            if (modalTitle) {
+                modalTitle.style.color = "#00e676"; // Judul jadi hijau sukses
+                modalTitle.innerText = "Sukses! ???";
+            }
+            if (modalText) modalText.innerText = "Mode Cheat Berhasil Diaktifkan! Semua tombol skip di level game sudah terbuka.";
+            
             pinInput.style.display = 'none';
             submitBtn.style.display = 'none';
             cancelBtn.innerText = "Gaskeunnn ??";
@@ -467,9 +479,6 @@ window.bukaAksesCheatGlobal = function() {
             cancelBtn.onclick = function() {
                 pinModal.classList.add('hidden');
                 
-                // Kembalikan warna judul ke pink untuk sesi berikutnya
-                modalTitle.style.color = "#ff4d88"; 
-
                 // Auto refresh screen aktif jika ada
                 const activeScreen = document.querySelector('.screen.active');
                 if (activeScreen) {
@@ -482,13 +491,16 @@ window.bukaAksesCheatGlobal = function() {
             };
         } else {
             // TAMPILKAN STATE ERROR DI DALAM MODAL (PIN SALAH)
-            modalIcon.innerText = "??";
-            modalTitle.innerText = "PIN Salah! ?";
-            modalText.innerText = "Kamu bukan Alwy ya? Ngaku! Jangan coba-coba tebak komitmen kita! ??";
+            if (modalIcon) modalIcon.innerText = "??";
+            if (modalTitle) {
+                modalTitle.style.color = "#ff1744"; // Judul jadi merah eror
+                modalTitle.innerText = "PIN Salah! ?";
+            }
+            if (modalText) modalText.innerText = "Kamu bukan Alwy ya? Ngaku! Jangan coba-coba tebak komitmen kita! ??";
+            
             pinInput.value = '';
             pinInput.focus();
             
-            // Getar HP jika salah (opsional bawaan sitemmu)
             if (navigator.vibrate) navigator.vibrate([50, 50]);
         }
     }
