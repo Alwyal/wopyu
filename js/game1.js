@@ -76,7 +76,7 @@ window.startLevel1 = function() {
         } else if (score < 55) {
             fallDuration = Math.random() * 0.4 + 0.9; 
         } else {
-            fallDuration = Math.random() * 0.3 + 0.6; 
+            fallDuration = Math.random() * 0.4 + 0.8; 
         }
 
         wish.style.animation = `fall ${fallDuration}s linear forwards`;
