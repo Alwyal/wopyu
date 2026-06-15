@@ -27,7 +27,7 @@ window.startLevel4 = function() {
         puzzleBoard.appendChild(slot);
     }
 
-    // 2. FIX: Buat array ID (0 - 35) dan kunci urutannya setelah di-shuffle secara murni
+    // 2. Buat array ID (0 - 35) secara murni
     const piecesData = [];
     for (let i = 0; i < TOTAL_PIECES; i++) {
         piecesData.push(i);
@@ -64,7 +64,7 @@ window.startLevel4 = function() {
             e.target.classList.remove('dragging');
         });
 
-        // --- EVENT FOR MOBILE TOUCH (ANTI DUPLIKASI & FREEZE) ---
+        // --- EVENT FOR MOBILE TOUCH (ANTI DUPLIKASI & STABIL) ---
         piece.addEventListener('touchstart', (e) => {
             if (piece.getAttribute('draggable') === 'false') return;
             
@@ -94,7 +94,6 @@ window.startLevel4 = function() {
             if (!piece.classList.contains('dragging')) return;
             piece.classList.remove('dragging');
             
-            // Kembalikan style CSS melayang ke bentuk semula
             piece.style.position = '';
             piece.style.zIndex = '';
             piece.style.left = '';
@@ -114,8 +113,11 @@ window.startLevel4 = function() {
                 const slotCorrectId = targetSlot.dataset.correctId;
                 const pId = piece.dataset.pieceId;
 
-                // Cek apakah slot tersebut sudah diisi kepingan lain atau belum
-                if (slotCorrectId === pId && targetSlot.children.length === 0) {
+                // FIX SAKTI: Cek apakah di dalam slot ada kepingan LAIN selain dirinya sendiri
+                const existingPiece = targetSlot.querySelector('.puzzle-piece-jigsaw');
+                const isSlotEmptyOrSelf = !existingPiece || existingPiece.id === piece.id;
+
+                if (slotCorrectId === pId && isSlotEmptyOrSelf) {
                     targetSlot.appendChild(piece);
                     piece.setAttribute('draggable', 'false');
                     
@@ -154,8 +156,11 @@ window.startLevel4 = function() {
         const slotCorrectId = targetSlot.dataset.correctId;
         const pieceId = draggedPiece.dataset.pieceId;
 
-        // Validasi ID cocok & slot target masih kosong melompong
-        if (slotCorrectId === pieceId && targetSlot.children.length === 0) {
+        // FIX SAKTI DESKTOP: Cek duplikasi kepingan lain
+        const existingPiece = targetSlot.querySelector('.puzzle-piece-jigsaw');
+        const isSlotEmptyOrSelf = !existingPiece || existingPiece.id === draggedPiece.id;
+
+        if (slotCorrectId === pieceId && isSlotEmptyOrSelf) {
             targetSlot.appendChild(draggedPiece);
             draggedPiece.setAttribute('draggable', 'false');
             draggedPiece.classList.remove('dragging'); 
