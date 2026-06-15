@@ -1,0 +1,1525 @@
+/* =========================
+   RESET
+========================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+/* =========================
+   BODY
+========================= */
+
+body{
+    overflow-x:hidden;
+    min-height:100vh;
+
+    background:
+    linear-gradient(
+        -45deg,
+        #ff758c,
+        #ff7eb3,
+        #ffd3a5,
+        #ffc3a0
+    );
+
+    background-size:400% 400%;
+
+    animation:gradientMove 12s ease infinite;
+}
+
+/* =========================
+   BACKGROUND ANIMATION
+========================= */
+
+@keyframes gradientMove{
+
+    0%{
+        background-position:0% 50%;
+    }
+
+    50%{
+        background-position:100% 50%;
+    }
+
+    100%{
+        background-position:0% 50%;
+    }
+
+}
+
+/* =========================
+   SCREEN
+========================= */
+
+.screen{
+    display:none;
+    justify-content:center;
+    align-items:center;
+    min-height:100vh;
+    padding:30px;
+}
+
+.screen.active{
+    display:flex;
+}
+
+/* =========================
+   INTRO CARD
+========================= */
+
+.card{
+
+    width:100%;
+    max-width:750px;
+
+    padding:50px;
+
+    border-radius:30px;
+
+    background:
+    rgba(255,255,255,0.92);
+
+    border:
+    2px solid rgba(255,255,255,.8);
+
+    box-shadow:
+    0 25px 60px rgba(0,0,0,.15),
+    0 0 35px rgba(255,255,255,.4);
+
+    backdrop-filter:blur(20px);
+
+    text-align:center;
+
+    color:#444;
+
+    position:relative;
+
+    overflow:hidden;
+}
+
+/* glow effect */
+
+.card::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:280px;
+    height:280px;
+
+    background:
+    radial-gradient(
+        circle,
+        rgba(255,120,180,.25),
+        transparent
+    );
+
+    top:-120px;
+    left:-120px;
+}
+
+/* =========================
+   TITLE
+========================= */
+
+.card h1 {
+    font-size: 2.8rem;
+    margin-bottom: 25px;
+    color: #ff4d88; /* Fallback warna jika browser tidak support gradasi */
+}
+
+/* Efek gradasi hanya diaplikasikan pada teks di dalam span */
+.card h1 span {
+    background: linear-gradient(90deg, #ff4d88, #ff7eb3);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block;
+}
+
+/* =========================
+   TEXT
+========================= */
+
+.card p{
+
+    font-size:1.1rem;
+
+    color:#555;
+
+    line-height:1.9;
+
+    margin-bottom:15px;
+}
+
+/* =========================
+   BUTTON
+========================= */
+
+button{
+
+    margin-top:20px;
+
+    border:none;
+
+    outline:none;
+
+    cursor:pointer;
+
+    padding:15px 35px;
+
+    border-radius:50px;
+
+    background:
+    linear-gradient(
+        135deg,
+        #ff4d88,
+        #ff7eb3
+    );
+
+    color:white;
+
+    font-size:1rem;
+
+    font-weight:600;
+
+    box-shadow:
+    0 10px 25px rgba(255,77,136,.35);
+
+    transition:.3s;
+}
+
+button:hover{
+
+    transform:
+    translateY(-4px)
+    scale(1.05);
+
+    box-shadow:
+    0 15px 35px rgba(255,77,136,.5);
+}
+
+/* =========================
+   JOURNEY PAGE
+========================= */
+
+#journey{
+
+    flex-direction:column;
+
+    padding-top:60px;
+    padding-bottom:60px;
+}
+
+.journey-header{
+
+    text-align:center;
+
+    margin-bottom:50px;
+}
+
+.journey-header h1{
+
+    color:white;
+
+    font-size:3rem;
+
+    text-shadow:
+    0 4px 15px rgba(0,0,0,.2);
+
+    margin-bottom:10px;
+}
+
+.journey-header p{
+
+    color:white;
+
+    font-size:1.1rem;
+
+    opacity:.95;
+}
+
+/* =========================
+   LEVEL GRID
+========================= */
+
+.levels{
+
+    width:100%;
+
+    max-width:1100px;
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(auto-fit,minmax(240px,1fr));
+
+    gap:25px;
+}
+
+/* =========================
+   LEVEL CARD
+========================= */
+
+.level{
+
+    background:white;
+
+    border-radius:25px;
+
+    padding:30px;
+
+    text-align:center;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+    box-shadow:
+    0 10px 25px rgba(0,0,0,.12);
+
+    position:relative;
+}
+
+.level:hover{
+
+    transform:
+    translateY(-10px);
+
+    box-shadow:
+    0 18px 40px rgba(255,77,136,.25);
+
+    border:
+    2px solid #ff7eb3;
+}
+
+.level span{
+
+    font-size:3.2rem;
+
+    display:block;
+
+    margin-bottom:15px;
+}
+
+.level h3{
+
+    color:#444;
+
+    font-size:1.2rem;
+}
+
+/* =========================
+   UNLOCKED LEVEL
+========================= */
+
+.unlocked{
+
+    background:
+    linear-gradient(
+        180deg,
+        #ffffff,
+        #fff4f8
+    );
+}
+
+/* =========================
+   LOCKED LEVEL
+========================= */
+
+.locked{
+
+    opacity:.45;
+
+    filter:grayscale(100%);
+
+    cursor:not-allowed;
+}
+
+.locked::after{
+
+    content:"🔒";
+
+    display:block;
+
+    font-size:1.5rem;
+
+    margin-top:10px;
+}
+
+/* =========================
+   FLOATING HEARTS
+========================= */
+
+.hearts{
+
+    position:fixed;
+
+    top:0;
+    left:0;
+
+    width:100%;
+    height:100%;
+
+    overflow:hidden;
+
+    pointer-events:none;
+
+    z-index:-1;
+}
+
+.hearts::before,
+.hearts::after{
+
+    content:"❤️";
+
+    position:absolute;
+
+    font-size:40px;
+
+    opacity:.3;
+
+    animation:
+    floatHeart 12s linear infinite;
+}
+
+.hearts::before{
+
+    left:20%;
+}
+
+.hearts::after{
+
+    left:80%;
+
+    animation-delay:5s;
+}
+
+@keyframes floatHeart{
+
+    0%{
+        transform:
+        translateY(100vh)
+        rotate(0deg);
+    }
+
+    100%{
+        transform:
+        translateY(-150px)
+        rotate(360deg);
+    }
+
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:768px){
+
+    .card{
+
+        padding:35px 25px;
+    }
+
+    .card h1{
+
+        font-size:2.2rem;
+    }
+
+    .card p{
+
+        font-size:1rem;
+    }
+
+    .journey-header h1{
+
+        font-size:2.2rem;
+    }
+
+    .journey-header p{
+
+        font-size:.95rem;
+    }
+
+    .level{
+
+        padding:25px;
+    }
+
+    .level span{
+
+        font-size:2.8rem;
+    }
+
+}
+
+/* =========================
+   SMALL MOBILE
+========================= */
+
+@media(max-width:480px){
+
+    .card{
+
+        border-radius:25px;
+    }
+
+    .card h1{
+
+        font-size:1.8rem;
+    }
+
+    button{
+
+        width:100%;
+    }
+
+}
+
+/* =========================
+   LEVEL 1 GAME AREA
+========================= */
+
+.game-container {
+    width: 100%;
+    max-width: 600px; 
+    text-align: center;
+    color: white;
+}
+
+.game-container h2{
+    font-size:1.7rem;
+    margin-bottom:10px;
+    text-shadow:0 4px 15px rgba(0,0,0,.2);
+}
+
+#scoreText{
+    font-size:1.2rem;
+    margin-bottom:20px;
+}
+
+/* area jatuhnya kata */
+#gameArea {
+    position: relative;
+    height: 500px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 25px;
+    overflow: hidden;
+    border: 2px solid rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(5px);
+    box-shadow: inset 0 0 20px rgba(0,0,0,0.05);
+}
+
+/* item harapan */
+.wish {
+    position: absolute;
+    top: -60px;
+    padding: 10px 20px;
+    background: white;
+    color: #ff4d88;
+    border-radius: 30px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    box-shadow: 0 8px 20px rgba(255, 77, 136, 0.2);
+    white-space: nowrap;
+    user-select: none;
+    transition: transform 0.1s ease;
+}
+
+.wish.popped {
+    animation: popOut 0.3s forwards;
+    pointer-events: none;
+}
+
+@keyframes popOut {
+    0% { transform: scale(1); opacity: 1; }
+    100% { transform: scale(1.4); opacity: 0; }
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* animasi jatuh */
+@keyframes fall{
+    from{
+        transform:translateY(-60px);
+    }
+    to{
+        transform:translateY(500px);
+    }
+}
+
+.hidden{
+    display:none;
+}
+
+#finishLevel1{
+    margin-top:20px;
+}
+
+/* ==========================================
+   EFEK LEDAKAN PARTIKEL & NYAWA LEVEL 1
+========================================== */
+
+/* Container partikel ledakan */
+.particle {
+    position: absolute;
+    pointer-events: none;
+    font-size: 1.2rem;
+    animation: explode 0.6s ease-out forwards;
+    z-index: 10;
+}
+
+@keyframes explode {
+    0% {
+        transform: translate(0, 0) scale(1);
+        opacity: 1;
+    }
+    100% {
+        /* Nilai X dan Y akan dimanipulasi secara acak via JS */
+        transform: translate(var(--x), var(--y)) scale(0);
+        opacity: 0;
+    }
+}
+
+/* Info Bar Atas Game Area */
+.game-info-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 10px 20px;
+    border-radius: 15px;
+    margin-bottom: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.game-info-bar p {
+    margin: 0 !important;
+    color: white !important;
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+/* Tombol Coba Lagi Saat Game Over */
+.retry-btn {
+    background: linear-gradient(135deg, #757575, #9e9e9e) !important;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2) !important;
+}
+
+/* ==========================================
+   LEVEL 2: MEMORY MATCH BOARD & CARD
+========================================== */
+
+.memory-board {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    width: 100%;
+    max-width: 440px;
+    margin: 0 auto 20px auto;
+}
+
+.memory-card {
+    aspect-ratio: 3 / 4;
+    position: relative;
+    cursor: pointer;
+    perspective: 500px;
+}
+
+.card-front, .card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+    transition: transform 0.4s ease, opacity 0.3s ease;
+}
+
+/* Tampak Belakang (Saat Tertutup) */
+.card-back {
+    background: linear-gradient(135deg, #ff758c, #ff7eb3);
+    border: 2px solid white;
+    font-size: 1.8rem;
+    color: white;
+    z-index: 2;
+    transform: rotateY(0deg);
+}
+
+/* Tampak Depan (Saat Terbuka Menampilkan Foto) */
+.card-front {
+    background: white;
+    border: 2px solid #ff7eb3;
+    z-index: 1;
+    transform: rotateY(-180deg);
+    opacity: 0;
+    overflow: hidden; /* Agar foto tidak keluar dari border radius */
+}
+
+/* Mengatur Foto di Dalam Kartu */
+.card-front img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Memotong foto secara proporsional agar estetik */
+}
+
+/* KONDISI SAAT KARTU DIBALIK */
+.memory-card.flipped .card-back,
+.memory-card.matched .card-back {
+    transform: rotateY(180deg);
+    opacity: 0;
+    z-index: 1;
+}
+
+.memory-card.flipped .card-front,
+.memory-card.matched .card-front {
+    transform: rotateY(0deg);
+    opacity: 1;
+    z-index: 2;
+}
+
+.memory-card.matched {
+    pointer-events: none;
+    animation: pulseMatch 0.5s ease-in-out;
+}
+
+@keyframes pulseMatch {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+.memory-particle {
+    position: absolute;
+    pointer-events: none;
+    font-size: 1.5rem;
+    z-index: 100;
+    animation: explodeMemory 0.7s ease-out forwards;
+}
+
+@keyframes explodeMemory {
+    0% { transform: translate(0, 0) scale(1); opacity: 1; }
+    100% { transform: translate(var(--mx), var(--my)) scale(0); opacity: 0; }
+}
+
+@media (max-width: 480px) {
+    .memory-board {
+        gap: 8px;
+        max-width: 350px;
+    }
+    .card-back { font-size: 1.4rem; }
+}
+
+/* ==========================================
+   LEVEL 3: SUPER HARD MAZE WITH CUSTOM FACES
+========================================== */
+
+.maze-container {
+    display: grid;
+    grid-template-columns: repeat(15, 1fr); /* Disesuaikan menjadi 15 kolom */
+    grid-template-rows: repeat(15, 1fr);
+    gap: 1px;
+    width: 100%;
+    max-width: 390px;
+    aspect-ratio: 1 / 1;
+    background: rgba(255, 255, 255, 0.25);
+    border-radius: 12px;
+    padding: 4px;
+    margin: 0 auto 20px auto;
+    border: 3px solid white;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+.maze-cell {
+    border-radius: 3px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.maze-wall {
+    background: linear-gradient(135deg, #ff4d88, #ff7eb3);
+    box-shadow: inset 0 0 4px rgba(0,0,0,0.15);
+}
+
+.maze-path {
+    background: rgba(255, 255, 255, 0.9);
+}
+
+/* Avatar Lingkaran Foto Muka di Labirin */
+.maze-avatar {
+    width: 90%;
+    height: 90%;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 1.5px solid #ff4d88;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.maze-avatar.target {
+    border-color: #ff1493;
+    animation: heartBeat 1.2s infinite alternate; /* Muka kamu berdenyut kangen */
+}
+
+@keyframes heartBeat {
+    0% { transform: scale(0.9); }
+    100% { transform: scale(1.1); }
+}
+
+/* CONTROLLER D-PAD */
+.dpad {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 15px auto;
+    width: 160px;
+}
+
+.dpad-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.dpad-btn {
+    width: 50px;
+    height: 50px;
+    margin: 0 !important;
+    padding: 0 !important;
+    border-radius: 50% !important;
+    background: white !important;
+    color: #ff4d88 !important;
+    font-size: 1.3rem !important;
+    font-weight: bold !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 6px 15px rgba(255, 77, 136, 0.3) !important;
+    border: 2px solid #ff7eb3 !important;
+}
+
+.dpad-btn:active {
+    transform: scale(0.9) !important;
+    background: #fff4f8 !important;
+}
+
+.dpad-center {
+    width: 50px;
+    height: 50px;
+}
+
+@media (max-width: 480px) {
+    .maze-container { max-width: 310px; }
+}
+
+/* Object Spesial di Labirin */
+.maze-cell.key-cell {
+    background: #fffacd !important; /* Latar kuning soft untuk kunci */
+    font-size: 1.1rem;
+    animation: bounce 0.6s infinite alternate;
+}
+
+.maze-cell.gate-cell {
+    background: #708090 !important; /* Abu-abu besi gembok */
+    font-size: 1.1rem;
+    color: white;
+}
+
+@keyframes bounce {
+    0% { transform: scale(0.9); }
+    100% { transform: scale(1.1); }
+}
+
+.maze-cell.portal-cell {
+    background: #e6e6fa !important; /* Latar ungu soft */
+    font-size: 1.2rem;
+    animation: portalGlow 1s infinite alternate;
+}
+
+@keyframes portalGlow {
+    0% {
+        box-shadow: inset 0 0 10px rgba(138, 43, 226, 0.6);
+        transform: scale(0.95);
+    }
+    100% {
+        box-shadow: inset 0 0 20px rgba(138, 43, 226, 1);
+        transform: scale(1.05);
+    }
+}
+
+/* ==========================================
+   POPUP MODAL CUSTOM UNTUK LEVEL 3
+========================================== */
+
+.maze-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(5px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    opacity: 1;
+    transition: opacity 0.3s ease;
+}
+
+.maze-modal-content {
+    background: rgba(255, 255, 255, 0.96);
+    border: 2px solid #ff7eb3;
+    padding: 30px 25px;
+    border-radius: 25px;
+    width: 90%;
+    max-width: 360px;
+    text-align: center;
+    box-shadow: 0 20px 50px rgba(255, 77, 136, 0.3);
+    animation: scaleUp 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+@keyframes scaleUp {
+    from { transform: scale(0.7); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+.maze-modal-icon {
+    font-size: 3rem;
+    display: block;
+    margin-bottom: 15px;
+    animation: bounceIcon 0.6s infinite alternate;
+}
+
+@keyframes bounceIcon {
+    from { transform: translateY(0); }
+    to { transform: translateY(-8px); }
+}
+
+.maze-modal-text {
+    color: #444 !important;
+    font-size: 1rem !important;
+    font-weight: 500;
+    line-height: 1.6;
+    margin-bottom: 20px !important;
+}
+
+.maze-modal-btn {
+    margin-top: 0 !important;
+    padding: 12px 30px !important;
+    font-size: 0.95rem !important;
+    width: 100%;
+}
+
+/* ==========================================
+   LEVEL 4 FIX: TRUE JIGSAW (GAMBAR BARU MUNCUL SAAT DI-DROP)
+========================================== */
+
+.jigsaw-puzzle-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.puzzle-wrapper {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+/* Papan Utama: Murni Kosong Tanpa Background Gambar Pengganggu! */
+.puzzle-board-jigsaw {
+    width: 360px;
+    height: 360px;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: repeat(6, 1fr);
+    border: 3px solid white;
+    border-radius: 12px;
+    background-color: rgba(255, 255, 255, 0.08); /* Hanya background transparan tipis */
+    box-sizing: border-box;
+    position: relative;
+}
+
+/* Slot Target Drop di Atas Papan */
+.puzzle-slot {
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    border: 1px dashed rgba(255, 255, 255, 0.25); /* Garis bantu kotak samar */
+    position: relative;
+}
+
+/* Area Kepingan Berserakan di Bawah */
+.scattered-pieces-area {
+    width: 100%;
+    max-width: 360px;
+    min-height: 140px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    padding: 15px;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 15px;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+}
+
+/* Kepingan Puzzle Jigsaw (Warna Asli Terang Benderang) */
+.puzzle-piece-jigsaw {
+    width: 60px;
+    height: 60px;
+    background-image: url('../img/puzzle-photo.jpg');
+    background-size: 360px 360px;
+    background-repeat: no-repeat;
+    cursor: grab;
+    opacity: 1 !important; /* Di area bawah dipastikan berwarna asli tajam */
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    box-sizing: border-box;
+    border-radius: 6px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.25);
+}
+
+.puzzle-piece-jigsaw.dragging {
+    opacity: 0.5;
+}
+
+/* Kepingan yang Berhasil Masuk Slot Papan Atas */
+.puzzle-slot .puzzle-piece-jigsaw {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100% !important;
+    height: 100% !important;
+    opacity: 1 !important; /* Menyala solid mengisi papan kosong */
+    border: 0.5px solid rgba(255, 255, 255, 0.15) !important;
+    box-shadow: none !important;
+    cursor: default;
+    pointer-events: none; /* Kunci permanen */
+}
+
+/* RESPONSIVE SMARTPHONE */
+@media (max-width: 480px) {
+    .puzzle-board-jigsaw {
+        width: 300px;
+        height: 300px;
+    }
+    .scattered-pieces-area {
+        max-width: 300px;
+    }
+    .puzzle-piece-jigsaw {
+        width: 50px;
+        height: 50px;
+        background-size: 300px 300px;
+    }
+}
+
+/* ==========================================
+   LEVEL 5: INTERACTIVE ROMANTIC TIMELINE
+========================================== */
+
+.timeline-container {
+    position: relative;
+    width: 100%;
+    max-width: 450px;
+    margin: 0 auto 20px auto;
+    padding: 10px 0;
+    max-height: 400px; /* Batasi tinggi agar bisa di-scroll di dalam box game */
+    overflow-y: auto;  /* Aktifkan scroll vertikal */
+    padding-right: 5px;
+}
+
+/* Garis Tengah Vertikal */
+.timeline-line {
+    position: absolute;
+    left: 20px; /* Set di sebelah kiri agar pas di layar HP */
+    top: 0;
+    width: 4px;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.6);
+    border-radius: 2px;
+}
+
+/* Item Kotak Cerita */
+.timeline-item {
+    position: relative;
+    margin-bottom: 25px;
+    padding-left: 45px; /* Beri jarak dari garis vertikal */
+    text-align: left;
+    opacity: 0.6; /* Awalnya agak pudar sebelum diklik */
+    transform: scale(0.95);
+    transition: all 0.3s ease;
+}
+
+/* Ketika Item Cerita Aktif / Sudah Diklik */
+.timeline-item.active {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* Bulatan Penanda di Garis */
+.timeline-dot {
+    position: absolute;
+    left: 14px;
+    top: 5px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: white;
+    border: 3px solid #ff7eb3;
+    z-index: 2;
+    transition: background 0.3s;
+}
+
+.timeline-item.active .timeline-dot {
+    background: #ff4d88;
+    box-shadow: 0 0 10px #ff4d88;
+}
+
+/* Balon Kotak Cerita */
+.timeline-box {
+    background: white;
+    padding: 15px;
+    border-radius: 18px;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: border 0.3s;
+}
+
+.timeline-item.active .timeline-box {
+    border-color: #ff7eb3;
+}
+
+/* Konten Cerita */
+.timeline-date {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #ff4d88;
+    margin-bottom: 5px;
+    display: block;
+}
+
+.timeline-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 8px;
+}
+
+.timeline-desc {
+    font-size: 0.9rem;
+    color: #555;
+    line-height: 1.4;
+    display: none; /* Cerita detail disembunyikan, baru muncul pas diklik! */
+}
+
+.timeline-item.active .timeline-desc {
+    display: block; /* Muncul dengan transisi smooth */
+}
+
+/* Foto Kenangan di dalam Timeline Box */
+.timeline-img {
+    width: 100%;
+    max-height: 150px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-top: 10px;
+    display: none;
+}
+
+.timeline-item.active .timeline-img {
+    display: block;
+}
+
+/* Styling Tambahan Kotak Kuis Level 5 */
+.quiz-box {
+    background: rgba(255, 255, 255, 0.2);
+    border: 2px solid white;
+    border-radius: 15px;
+    padding: 15px;
+    margin-bottom: 20px;
+    backdrop-filter: blur(5px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+}
+
+.quiz-question {
+    color: white;
+    font-weight: 700;
+    font-size: 1.05rem;
+    margin-bottom: 12px;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+}
+
+.quiz-options-container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.quiz-opt-btn {
+    background: white;
+    color: #333;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.2s ease;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+}
+
+.quiz-opt-btn:hover {
+    background: #fff0f5;
+    transform: translateY(-2px);
+}
+
+/* Animasi salah/benar saat klik */
+.quiz-opt-btn.wrong {
+    background: #ff4d4d !important;
+    color: white !important;
+    animation: shake 0.3s ease;
+}
+
+.quiz-opt-btn.correct {
+    background: #28a745 !important;
+    color: white !important;
+}
+
+.quiz-progress {
+    background: rgba(255, 255, 255, 0.3);
+    color: white;
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-6px); }
+    75% { transform: translateX(6px); }
+}
+
+/* ==========================================
+   LEVEL 6: THE ULTIMATE SURPRISE GIFT BOX
+========================================== */
+
+.final-container {
+    position: relative;
+    overflow: hidden;
+}
+
+.confetti-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 5;
+}
+
+/* KOTAK KADO 3D FLAT CSS ANIMATION */
+.gift-box {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    margin: 40px auto;
+    cursor: pointer;
+    animation: shakeBox 1.5s infinite ease-in-out;
+}
+
+@keyframes shakeBox {
+    0%, 100% { transform: rotate(0deg) scale(1); }
+    20% { transform: rotate(-8deg) scale(1.05); }
+    40% { transform: rotate(8deg) scale(1.05); }
+    60% { transform: rotate(-5deg) scale(1.02); }
+    80% { transform: rotate(5deg) scale(1.02); }
+}
+
+.gift-body {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 95px;
+    background: #ff4d88;
+    border-radius: 0 0 10px 10px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+}
+
+.gift-lid {
+    position: absolute;
+    top: 10px;
+    width: 130px;
+    left: -5px;
+    height: 20px;
+    background: #ff758c;
+    border-radius: 4px;
+    z-index: 2;
+}
+
+.gift-ribbon-v {
+    position: absolute;
+    top: 10px;
+    left: 50px;
+    width: 20px;
+    height: 110px;
+    background: #fff;
+    z-index: 3;
+}
+
+.gift-ribbon-h {
+    position: absolute;
+    top: 45px;
+    left: 0;
+    width: 120px;
+    height: 20px;
+    background: #fff;
+    z-index: 3;
+}
+
+/* SURPRISE CONTENT AFTER OPENED */
+.surprise-content {
+    animation: fadeInContainer 0.8s ease forwards;
+    z-index: 10;
+    position: relative;
+}
+
+@keyframes fadeInContainer {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.heart-crown {
+    font-size: 2.2rem;
+    margin-bottom: 5px;
+    animation: pulseCrown 1s infinite alternate;
+}
+
+@keyframes pulseCrown {
+    0% { transform: scale(0.95); }
+    100% { transform: scale(1.05); }
+}
+
+/* SURAT CINTA GULUNG */
+.love-letter {
+    background: #fffbf0;
+    border-left: 5px solid #ff4d88;
+    padding: 20px;
+    border-radius: 15px;
+    text-align: left;
+    color: #444 !important;
+    font-size: 0.95rem !important;
+    line-height: 1.6;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    margin: 20px 0;
+    max-height: 220px;
+    overflow-y: auto;
+}
+
+.love-letter p {
+    margin-bottom: 12px !important;
+    color: #444 !important;
+}
+
+.signature {
+    text-align: right;
+    font-weight: 700;
+    color: #ff4d88 !important;
+    font-style: italic;
+    margin-top: 15px;
+}
+
+/* REWARD BUTTON INTERACTIVE */
+.wish-interact {
+    background: rgba(255, 255, 255, 0.9);
+    padding: 15px;
+    border-radius: 18px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+}
+
+.wish-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.wish-btn {
+    background: linear-gradient(135deg, #ff758c, #ff4d88);
+    color: white !important;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.wish-btn:active {
+    transform: scale(0.95);
+}
+
+/* Tombol Gelembung Mengambang */
+.music-bubble {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 55px;
+    height: 55px;
+    background: linear-gradient(135deg, #ff758c, #ff4d88);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    box-shadow: 0 4px 15px rgba(255, 77, 136, 0.5);
+    cursor: pointer;
+    z-index: 9998; /* Sangat tinggi agar selalu di atas layar game */
+    transition: transform 0.2s ease, opacity 0.3s ease;
+    animation: bubbleFloat 3s ease-in-out infinite alternate;
+}
+
+.music-bubble:active {
+    transform: scale(0.9);
+}
+
+/* Efek Berputar kalau musik menyala */
+.music-bubble.playing {
+    animation: bubbleFloat 3s ease-in-out infinite alternate, spinBubble 10s linear infinite;
+}
+
+@keyframes bubbleFloat {
+    0% { transform: translateY(0px); }
+    100% { transform: translateY(-10px); }
+}
+
+@keyframes spinBubble {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* Box Utama Pemutar Musik di dalam Modal */
+#musicModal .maze-modal-content {
+    background: #ffffff !important;
+    border: 3px solid #f8bbd0 !important; /* Border pink soft */
+    border-radius: 30px !important;
+    padding: 25px 20px !important;
+    box-shadow: 0 10px 25px rgba(248, 187, 208, 0.4) !important;
+}
+
+/* Kotak Dotted Judul Lagu */
+#currentTrackTitle {
+    display: block;
+    font-size: 0.95rem !important;
+    color: #333333 !important;
+    font-weight: 700 !important;
+    margin: 15px 0 25px 0 !important;
+    background: #fff5f7 !important;
+    padding: 12px 15px !important;
+    border-radius: 18px !important;
+    border: 2px dashed #ff758c !important; /* Garis putus-putus pink */
+    line-height: 1.4;
+}
+
+/* Container Pembungkus 3 Tombol Kontrol */
+#musicModal .maze-modal-content div[style*="display: flex"] {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 12px !important;
+    margin: 20px 0 !important;
+}
+
+/* Gaya Dasar Tombol Bulat Menggelembung (Bubbly 3D) */
+#prevTrackBtn, #playPauseTrackBtn, #nextTrackBtn {
+    border: none !important;
+    cursor: pointer !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    transition: all 0.2s ease !important;
+    font-family: inherit !important;
+}
+
+/* Tombol Kiri & Kanan (⏮️ dan ⏭️) */
+#prevTrackBtn, #nextTrackBtn {
+    width: 52px !important;
+    height: 52px !important;
+    background: linear-gradient(135deg, #ff9ebb, #ff6b8b) !important; /* Gradasi pink balon */
+    color: #ffffff !important;
+    font-size: 1.1rem !important;
+    border-radius: 50% !important;
+    /* Efek Bayangan Bulat 3D Meletus */
+    box-shadow: inset -3px -3px 8px rgba(0,0,0,0.15), 
+                inset 3px 3px 8px rgba(255,255,255,0.4),
+                0 6px 12px rgba(255, 107, 139, 0.3) !important;
+}
+
+/* Tombol Tengah Play/Pause (⏸️ atau ▶️) - Dibuat Lebih Besar */
+#playPauseTrackBtn {
+    width: 65px !important;
+    height: 65px !important;
+    background: linear-gradient(135deg, #ff6b8b, #ff406c) !important; /* Lebih terang menonjol */
+    color: #ffffff !important;
+    font-size: 1.3rem !important;
+    border-radius: 50% !important;
+    box-shadow: inset -4px -4px 10px rgba(0,0,0,0.18), 
+                inset 4px 4px 10px rgba(255,255,255,0.4),
+                0 8px 16px rgba(255, 64, 108, 0.4) !important;
+}
+
+/* Efek Hover & Tekan Biar Terasa Kenyal Luwes */
+#prevTrackBtn:hover, #nextTrackBtn:hover {
+    transform: translateY(-2px) scale(1.05);
+    background: linear-gradient(135deg, #ffb4ca, #ff7b99) !important;
+}
+
+#playPauseTrackBtn:hover {
+    transform: translateY(-2px) scale(1.05);
+    background: linear-gradient(135deg, #ff7b99, #ff527b) !important;
+}
+
+#prevTrackBtn:active, #playPauseTrackBtn:active, #nextTrackBtn:active {
+    transform: translateY(2px) scale(0.95);
+    box-shadow: inset 3px 3px 6px rgba(0,0,0,0.2), 
+                0 2px 4px rgba(0,0,0,0.1) !important;
+}
+
+/* Tombol Tutup Abu-Abu */
+#closeMusicModalBtn {
+    background: #78909c !important; /* Abu-abu kalem matte */
+    color: #ffffff !important;
+    font-weight: 700 !important;
+    border-radius: 15px !important;
+    padding: 10px 24px !important;
+    font-size: 0.9rem !important;
+    border: none !important;
+    box-shadow: 0 4px 10px rgba(120, 144, 156, 0.3) !important;
+    transition: background 0.2s !important;
+}
+
+#closeMusicModalBtn:hover {
+    background: #607d8b !important;
+}

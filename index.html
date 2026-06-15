@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wopyuuu Sayang❤️</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="hearts"></div>
+
+    <section id="intro" class="screen active">
+        <div class="card">
+            <h2>🎂<span>Happy Birthday</span>🎂</h2>
+            <p>My Love Dinda Anjani❤️</p>
+            <p>Hari ini adalah hari yang spesial. Hari dimana seseorang yang sangat berarti dalam hidupku bertambah usia.</p>
+            <p>Aku membuat petualangan kecil ini khusus untukmu.</p>
+            <p>Setiap langkah di petualangan ini dibuat dengan cinta, jadi jangan buru-buru ya sayang ❤️</p>
+            <button id="startBtn">Gaskeunnn!!! ❤️</button>
+        </div>
+    </section>
+
+    <section id="journey" class="screen">
+        <div class="journey-header">
+            <h2 style="font-size: 1.8rem; margin-bottom: 10px; color: #fff; text-shadow: 0 0 10px #ff4d88;">✨ Birthday Journey ✨</h2>
+            <p>Tenang aja, levelnya gak sesulit memahami isi hatiku yang penuh kamu kok😘</p>
+        </div>
+
+        <div class="levels">
+            <div class="level unlocked" data-level="1" id="lvl1">
+                <span>🎈</span>
+                <h3>Tangkap Harapan</h3>
+            </div>
+            <div class="level locked" data-level="2" id="lvl2">
+                <span>🧠</span>
+                <h3>Memori Pasangan</h3>
+            </div>
+            <div class="level locked" data-level="3" id="lvl3">
+                <span>🧩</span>
+                <h3>Labirin Cinta</h3>
+            </div>
+            <div class="level locked" data-level="4" id="lvl4">
+                <span>📸</span>
+                <h3>Puzzle Kenangan</h3>
+            </div>
+            <div class="level locked" data-level="5" id="lvl5">
+                <span>🤨</span>
+                <h3>Ujian Kelayakan</h3>
+            </div>
+            <div class="level locked" data-level="6" id="lvl6">
+                <span>🎁</span>
+                <h3>Kado Spesial</h3>
+            </div>
+        </div>
+    </section>
+
+    <section id="game1-screen" class="screen">
+        <div class="game-container">
+            <h2>🎈 Tangkap Harapan 🎈</h2>
+            <p style="color: white; margin-bottom: 15px; font-size: 0.95rem;">
+                Misinya gampang kok, cukup tangkap semua harapan... hatiku kan sudah berhasil kamu tangkap duluan 😘❤️
+            </p>
+            
+            <div class="game-info-bar">
+                <p>❤️ Tertangkap: <span id="scoreVal">0</span> / 66</p>
+                <p>💔 Lolos: <span id="missedVal">0</span> </p>
+            </div>
+            
+            <div id="gameArea"></div>
+            
+            <button id="backToJourneyBtn" class="hidden">Lanjut Yuuuu Sayang ❤️</button>
+        </div>
+    </section>
+
+    <section id="game2-screen" class="screen">
+        <div class="game-container">
+            <h2>🧠 Memori Pasangan 🧠</h2>
+            <p style="color: white; margin-bottom: 15px; font-size: 0.95rem;">
+                Cari semua pasangan kartunya ya sayang, kalau pasangan hidupnya kan sudah ketemu 🥰❤️
+            </p>
+            
+            <div id="memoryBoard" class="memory-board"></div>
+            
+            <button id="backToJourneyBtn2" class="hidden">Lanjut Yuuu Sayang ❤️</button>
+        </div>
+    </section>
+
+    <section id="game3-screen" class="screen">
+        <div class="game-container">
+            <h2>🧩 Labirin Cinta 🧩</h2>
+            <p style="color: white; margin-bottom: 15px; font-size: 0.95rem;">
+                Bantu jalannya menuju hatiku ya! Jangan menabrak tembok 💕
+            </p>
+            
+            <div id="mazeContainer" class="maze-container"></div>
+            
+            <div class="dpad">
+                <button class="dpad-btn up" id="moveUp">▲</button>
+                <div class="dpad-row">
+                    <button class="dpad-btn left" id="moveLeft">◀</button>
+                    <div class="dpad-center"></div>
+                    <button class="dpad-btn right" id="moveRight">▶</button>
+                </div>
+                <button class="dpad-btn down" id="moveDown">▼</button>
+            </div>
+            
+            <button id="backToJourneyBtn3" class="hidden">Lanjut Yuuu Sayang ❤️</button>
+        </div>
+
+        <div id="mazeModal" class="maze-modal hidden">
+            <div class="maze-modal-content">
+                <span id="mazeModalIcon" class="maze-modal-icon">🔑</span>
+                <p id="mazeModalText" class="maze-modal-text">Notifikasi Pesan Di Sini...</p>
+                <button id="mazeModalCloseBtn" class="maze-modal-btn">Oke Sayang ❤️</button>
+            </div>
+        </div>
+    </section>
+
+    <section id="game4-screen" class="screen">
+        <div class="game-container jigsaw-puzzle-container">
+            <h2>📸 Puzzle Kenangan 📸</h2>
+            <p style="color: white; margin-bottom: 15px; font-size: 0.95rem;">
+                Satukan kembali kepingan foto kita yuk, Sayang! ❤️
+            </p>
+            
+            <div id="puzzleBoard" class="puzzle-board-jigsaw"></div>
+            
+            <div id="scatteredPiecesArea" class="scattered-pieces-area"></div>
+            
+            <button id="backToJourneyBtn4" class="hidden">Lanjut Yuuu Sayang ❤️</button>
+        </div>
+    </section>
+
+    <section id="game5-screen" class="screen">
+        <div class="game-container">
+            
+            <div id="quizHeader">
+                <h2>🤨 Ujian Kelayakan 🤨</h2>
+                <p style="color: white; margin-bottom: 20px; font-size: 0.9rem;">
+                    Jawab dengan jujur dan hati-hati! Salah satu kali? Hukuman mati menantimu! 💀
+                </p>
+            </div>
+            
+            <div id="quizBox" class="quiz-box">
+                <div class="quiz-progress" id="quizProgress">Pertanyaan 1/6</div>
+                <p id="quizQuestion" class="quiz-question">Loading pertanyaan...</p>
+                <div id="quizOptions" class="quiz-options-container"></div>
+            </div>
+
+            <div id="quizModal" class="maze-modal hidden">
+                <div class="maze-modal-content" id="quizModalContent">
+                    <span id="quizModalIcon" class="maze-modal-icon">🥰</span>
+                    <p id="quizModalText" class="maze-modal-text">Pesan di sini...</p>
+                    <button id="quizModalCloseBtn" class="maze-modal-btn">Lanjut Yuuu Sayang ❤️</button>
+                </div>
+            </div>
+            
+            <button id="finishLevel5Btn" class="hidden">Buka Gerbang Misi Terakhir! 🎁</button>
+        </div>
+    </section>
+
+    <section id="game6-screen" class="screen">
+        <div class="game-container final-container">
+            <canvas id="confettiCanvas" class="confetti-canvas"></canvas>
+
+            <div id="giftBoxSection" class="gift-box-section">
+                <h2 style="font-size: 1.8rem; text-shadow: 0 0 10px #ff4d88;">🎁 KADO UTAMA UNTUK DINDA SAYANG 🎁</h2>
+                <p style="color: white; margin-bottom: 25px; font-size: 0.95rem; font-weight: 600;">
+                    Ketuk kadonya pelan-pelan yaa sayangkuu! 🥺👇💖
+                </p>
+                <div id="mainGiftBox" class="gift-box">
+                    <div class="gift-lid"></div>
+                    <div class="gift-ribbon-v"></div>
+                    <div class="gift-ribbon-h"></div>
+                    <div class="gift-body"></div>
+                </div>
+            </div>
+
+            <div id="surpriseContent" class="surprise-content hidden">
+                <h2 style="font-size: 1.8rem; color: #fff; text-shadow: 0 0 12px #ff4d88; margin-bottom: 5px;">
+                    HBD Sayangkuuu, Cintakuu, Semestakuu!
+                </h2>
+                <div style="font-size: 1.5rem; margin-bottom: 15px;">🥳🎂🎉💖✨</div>
+                
+                <div id="openLetterSection" style="text-align: center; margin: 20px 0;">
+                    <button class="wish-btn" style="background: linear-gradient(135deg, #ff758c, #ff4d88); font-weight: 700; border-radius: 50px; padding: 15px 30px; font-size: 1.05rem; box-shadow: 0 0 15px #ff4d88; border: none; cursor: pointer; animation: pulseCrown 0.8s infinite alternate;" 
+                            onclick="document.getElementById('loveLetterSection').style.display = 'block'; this.parentNode.style.display = 'none';">
+                        💌 Buka Surat Cinta dari Mas Alwy 💌
+                    </button>
+                </div>
+
+                <div id="loveLetterSection" style="display: none; animation: fadeInContainer 0.6s ease forwards;">
+                    <div class="love-letter" style="background: #fff5f7; border-left: 6px solid #ff4d88; border-radius: 20px;">
+                        <p>Hai Dinda sayang, pacar aku yang paling gemesin sealam semesta!👋🥰</p>
+                        <p>Makasih banyaaak yaa utun udah mau luangin waktu dan capek-capek mainin game arcade mini yang aku bikin khusus buat kamu dari Level 1 sampai bisa lulus kuis maut tadi, hehe. Aku sengaja begadang racik web ini murni cuma demi bisa lihat kamu senyum manis hari ini! Udah senyum belum? Harus senyum dong! 😤💕</p>
+                        <p>Di usiamu yang baru ini, aku berdoa semoga kamu selalu dikasih bahagia yang melimpah, sehat terus lahir batin (ingat, kurangi pedasnya! 😾), dilancarkan segala urusan dan cita-citanya. Dan yang paling penting... semoga kita bisa terus lewatin tahun-tahun berikutnya bareng-bareng terus yaa, saling sayang, saling sabar, dan melengkapi satu sama lain. I'm truly, deeply, the luckiest guy because I have you in my life. Happy Birthday, Sayang! 🥺🍼💗✨</p>
+                        <p class="signature" style="font-size: 1.05rem; color: #ff4d88;">— Pacarmu yang Paling Ganteng & Manis, Alwy 🦖💖</p>
+                    </div>
+
+                    <div id="doneReadingSection" style="text-align: center; margin: 15px 0 25px 0;">
+                        <button class="wish-btn" style="background: linear-gradient(135deg, #00e676, #28a745); font-weight: 700; border-radius: 50px; padding: 12px 25px; font-size: 0.95rem; border: none; cursor: pointer; box-shadow: 0 0 10px #00e676;"
+                                onclick="document.getElementById('wishInteractSection').style.display = 'block'; this.parentNode.style.display = 'none'; this.scrollIntoView({ behavior: 'smooth' });">
+                            💝 Ambil Kado Yuuu 💝
+                        </button>
+                    </div>
+                </div>
+
+                <div id="wishInteractSection" class="wish-interact" style="display: none; border: 2px solid #ff7eb3; background: rgba(255, 255, 255, 0.95); border-radius: 22px; padding: 18px; animation: fadeInContainer 0.6s ease forwards;">
+                    <p style="color: #ff4d88; font-weight: 800; font-size: 1rem; margin-bottom: 12px; line-height: 1.4;">
+                        Ihirrr! Sesuai janji, silakan pilih satu reward kado dunia nyata dari aku di bawah ini yaa Tuan Putri: 👑👇💕
+                    </p>
+                    <div class="wish-buttons">
+                        <button class="wish-btn" style="background: linear-gradient(135deg, #ff758c, #ff4d88); font-weight: 700; border-radius: 12px;" onclick="pilihKado('Makan Malam Romantis Bareng 🍕')">
+                            🩹 Kompres Perut
+                        </button>
+                        <button class="wish-btn" style="background: linear-gradient(135deg, #ff758c, #ff4d88); font-weight: 700; border-radius: 12px;" onclick="pilihKado('Buket Bunga + Boneka Gemas 🌹')">
+                            🧸 Boneka Gemes 
+                        </button>
+                        <button class="wish-btn" style="background: linear-gradient(135deg, #ff758c, #ff4d88); font-weight: 700; border-radius: 12px;" onclick="pilihKado('Kado Misteri Pilihan Dinda 🎁')">
+                            🎁 Surprise Box (Dinda Request Aja!)
+                        </button>
+                    </div>
+                </div>
+
+                <button id="backToJourneyBtn6" class="btn-secondary" style="margin-top: 25px; background: rgba(255,255,255,0.2); border: 1px dashed white; font-size: 0.85rem; opacity: 0.7;">
+                    Lihat Peta Misi Lagi ✨
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <div id="globalGameModal" class="maze-modal hidden">
+        <div class="maze-modal-content">
+            <span id="globalModalIcon" class="maze-modal-icon">🎉</span>
+            <h3 id="globalModalTitle" style="color: #ff4d88; font-weight: 700; margin-bottom: 10px;">Level Selesai!</h3>
+            <p id="globalModalText" class="maze-modal-text">Ucapan selamat akan muncul di sini...</p>
+            <button id="globalModalCloseBtn" class="maze-modal-btn">Lanjut Yuu Sayang ❤️</button>
+        </div>
+    </div>
+
+    <audio id="bgMusic" loop>
+        <source src="audio/hbd.mp3" type="audio/mpeg">
+        Browser kamu tidak mendukung pemutar audio otomatis. 🥺
+    </audio>
+
+    <script src="js/app.js"></script>
+    <script src="js/game1.js"></script>
+    <script src="js/game2.js"></script>
+    <script src="js/game3.js"></script>
+    <script src="js/game4.js"></script>
+    <script src="js/game5.js"></script>
+    <script src="js/game6.js"></script>
+
+    <div id="musicBubble" class="music-bubble">
+        <span>🎵</span>
+    </div>
+
+    <div id="musicModal" class="maze-modal hidden" style="z-index: 9999;">
+        <div class="maze-modal-content" style="max-width: 290px; padding: 20px; border-radius: 25px;">
+            <span class="maze-modal-icon" style="animation: pulseCrown 1s infinite alternate;">🎧</span>
+            <h3 style="color: #ff4d88; font-weight: 700; margin-bottom: 5px; font-size: 1.1rem;">Dinda Music</h3>
+            
+            <p id="currentTrackTitle" style="font-size: 0.9rem; color: #555; font-weight: bold; margin: 10px 0; background: #fff5f7; padding: 8px; border-radius: 12px; border: 1px dashed #ff4d88;">
+                Memuat lagu...
+            </p>
+
+            <div style="display: flex; justify-content: center; gap: 15px; margin: 15px 0;">
+                <button id="prevTrackBtn" style="background: #ff758c; color: white; border: none; width: 40px; height: 40px; border-radius: 50%; font-size: 1rem; cursor: pointer;">⏮️</button>
+                <button id="playPauseTrackBtn" style="background: #ff4d88; color: white; border: none; width: 50px; height: 50px; border-radius: 50%; font-size: 1.2rem; cursor: pointer; box-shadow: 0 4px 10px rgba(255,77,136,0.3);">⏸️</button>
+                <button id="nextTrackBtn" style="background: #ff758c; color: white; border: none; width: 40px; height: 40px; border-radius: 50%; font-size: 1rem; cursor: pointer;">⏭️</button>
+            </div>
+
+            <button id="closeMusicModalBtn" class="maze-modal-btn" style="padding: 8px 20px; font-size: 0.85rem; margin-top: 5px; background: #6c757d;">Tutup 🌸</button>
+        </div>
+    </div>
+
+    <audio id="bgMusic" loop></audio>
+</body>
+</html>
