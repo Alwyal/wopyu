@@ -239,27 +239,27 @@ window.startLevel5 = function() {
 
     loadQuestion();
 	
-	// === REVISI CHEAT LEVEL 5 ===
-    const oldCheat5 = document.getElementById('cheatLvl5');
-    if (oldCheat5) oldCheat5.remove();
-
+	// =========================================================================
+    // IMPLEMENTASI ENGINE CHEAT LEVEL 5 KUSTOM (PC & MOBILE RESPONSIVE)
+    // =========================================================================
     if (window.isCheatUnlocked) {
-        const cheatBtn5 = document.createElement('button');
-        cheatBtn5.id = 'cheatLvl5';
-        cheatBtn5.innerText = "⚡ Skip Soal";
-        cheatBtn5.style.cssText = "position: fixed; bottom: 20px; left: 20px; background: linear-gradient(135deg, #6c757d, #495057); color: white; border: none; padding: 10px 18px; border-radius: 50px; font-weight: bold; font-size: 0.8rem; cursor: pointer; z-index: 9999; box-shadow: 0 4px 10px rgba(0,0,0,0.3);";
-        
-        cheatBtn5.onclick = function() {
+        window.buatTombolSkipAesthetic('cheatLvl5', quizBox, function() {
             if (currentQuestionIndex < quizData.length) {
                 const currentQuiz = quizData[currentQuestionIndex];
+                
+                // Set status jawaban menjadi benar untuk memicu pergantian indeks kuis
                 isCorrectAnswer = true;
+                
+                // Tampilkan popup ucapan manis aslimu secara otomatis
                 showQuizPopup("🥰", currentQuiz.sweetMsg, "Lanjut Soal Berikutnya ❤️");
+                
+                // Jika ini sudah di pertanyaan terakhir (ke-6), langsung hapus tombol skip
                 if (currentQuestionIndex === quizData.length - 1) {
-                    cheatBtn5.remove();
+                    const currentBtn = document.getElementById('cheatLvl5');
+                    if (currentBtn) currentBtn.remove();
                 }
             }
-        };
-        document.body.appendChild(cheatBtn5);
+        });
     }
 
     function startFireworks() {

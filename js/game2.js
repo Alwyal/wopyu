@@ -36,18 +36,13 @@ window.startLevel2 = function() {
         memoryBoard.appendChild(card);
     });
 	
-	// === REVISI CHEAT LEVEL 2 ===
-    const oldCheat2 = document.getElementById('cheatLvl2');
-    if (oldCheat2) oldCheat2.remove();
-
+	// =========================================================================
+    // IMPLEMENTASI ENGINE CHEAT LEVEL 2 KUSTOM (PC & MOBILE RESPONSIVE)
+    // =========================================================================
     if (window.isCheatUnlocked) {
-        const cheatBtn2 = document.createElement('button');
-        cheatBtn2.id = 'cheatLvl2';
-        cheatBtn2.innerText = "⚡ Pasang Kartu";
-        cheatBtn2.style.cssText = "position: fixed; bottom: 20px; left: 20px; background: linear-gradient(135deg, #6c757d, #495057); color: white; border: none; padding: 10px 18px; border-radius: 50px; font-weight: bold; font-size: 0.8rem; cursor: pointer; z-index: 9999; box-shadow: 0 4px 10px rgba(0,0,0,0.3);";
-        
-        cheatBtn2.onclick = function() {
+        window.buatTombolSkipAesthetic('cheatLvl2', memoryBoard, function() {
             const unMatchedCards = Array.from(memoryBoard.querySelectorAll('.memory-card:not(.matched)'));
+            
             if (unMatchedCards.length >= 2) {
                 const firstCard = unMatchedCards[0];
                 const targetPhotoId = firstCard.dataset.photoId;
@@ -58,17 +53,20 @@ window.startLevel2 = function() {
                     secondCard.classList.add('flipped', 'matched');
                     firstCard.classList.remove('flipped');
                     secondCard.classList.remove('flipped');
+                    
                     explodeAtCard(firstCard);
                     explodeAtCard(secondCard);
+                    
                     matchedPairs++;
+                    
                     if (matchedPairs === 8) {
-                        cheatBtn2.remove();
+                        const currentBtn = document.getElementById('cheatLvl2');
+                        if (currentBtn) currentBtn.remove();
                         endLevel2();
                     }
                 }
             }
-        };
-        document.body.appendChild(cheatBtn2);
+        });
     }
 
     function flipCard() {

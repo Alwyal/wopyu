@@ -297,5 +297,20 @@
     </div>
 
     <audio id="bgMusic"></audio>
+	
+	<div id="cheatPinModal" class="maze-modal hidden" style="z-index: 100000;">
+        <div class="maze-modal-content" style="max-width: 290px; padding: 25px; border-radius: 25px; border: 3px solid #f8bbd0; box-shadow: 0 10px 25px rgba(248, 187, 208, 0.4);">
+            <span class="maze-modal-icon" style="animation: pulseCrown 0.8s infinite alternate; font-size: 3rem;">🔒</span>
+            <h3 style="color: #ff4d88; font-weight: 700; margin-top: 10px; margin-bottom: 5px; font-size: 1.2rem;">Mode Cheat</h3>
+            <p style="font-size: 0.85rem; color: #666; margin-bottom: 15px; font-weight: 600;">Masukkan PIN Rahasia untuk membuka fitur rahasia:</p>
+            
+            <input type="password" id="cheatPinInput" placeholder="••••••••" maxlength="8" style="width: 100%; max-width: 200px; padding: 10px; text-align: center; font-size: 1.2rem; font-weight: bold; border: 2px solid #ff758c; border-radius: 15px; outline: none; color: #ff4d88; background: #fff5f7; box-sizing: border-box; margin-bottom: 20px; letter-spacing: 3px;">
+            
+            <div style="display: flex; flex-direction: column; gap: 10px; width: 100%;">
+                <button id="submitPinBtn" class="maze-modal-btn" style="background: linear-gradient(135deg, #ff758c, #ff4d88); font-weight: 700; border-radius: 50px; padding: 10px 0; font-size: 0.95rem; box-shadow: 0 4px 10px rgba(255,77,136,0.3); border: none; cursor: pointer; width: 100%;">Verifikasi ⚡</button>
+                <button id="cancelPinBtn" class="maze-modal-btn" style="padding: 8px 0; font-size: 0.85rem; background: #6c757d; width: 100%; border-radius: 50px; border: none; color: white; cursor: pointer;">Batal 🌸</button>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

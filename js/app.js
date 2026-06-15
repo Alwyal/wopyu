@@ -378,7 +378,7 @@ window.showGlobalGamePopup = function(icon, title, message, nextLevel) {
 };
 
 // =========================================================================
-// GLOBAL CHEAT MANAGEMENT SYSTEM (SAYANG DINDA VERSION)
+// GLOBAL CHEAT MANAGEMENT SYSTEM (KUSTOM MODAL + ANTI-MACET PC)
 // =========================================================================
 window.isCheatUnlocked = false; // Status awal cheat terkunci
 
@@ -387,31 +387,120 @@ window.bukaAksesCheatGlobal = function() {
         alert("? Status: Mode Cheat sudah aktif, Yuu meluncur ke level game~??");
         return;
     }
-    
-    const pinInput = prompt("?? Masukkan PIN Rahasia untuk membuka mode Cheat:");
-    if (pinInput === "16062008") {
-        window.isCheatUnlocked = true;
-        
-        // FIX: Ubah ikon gembok di peta jadi terbuka begitu sukses masukkan PIN!
-        const secretBtn = document.getElementById('secretCheatTrigger');
-        if (secretBtn) {
-            secretBtn.innerText = "??";
-            secretBtn.style.background = "rgba(0, 230, 118, 0.3)"; // Berubah agak hijau transparan
-            secretBtn.style.color = "#ffffff";
-        }
 
-        alert("?? Mode Cheat Berhasil Diaktifkan!???");
-        
-        // Auto refresh screen aktif jika ada
-        const activeScreen = document.querySelector('.screen.active');
-        if (activeScreen) {
-            if (activeScreen.id === 'game1-screen' && typeof window.startLevel1 === 'function') window.startLevel1();
-            if (activeScreen.id === 'game2-screen' && typeof window.startLevel2 === 'function') window.startLevel2();
-            if (activeScreen.id === 'game3-screen' && typeof window.startLevel3 === 'function') window.startLevel3();
-            if (activeScreen.id === 'game4-screen' && typeof window.startLevel4 === 'function') window.startLevel4();
-            if (activeScreen.id === 'game5-screen' && typeof window.startLevel5 === 'function') window.startLevel5();
+    // 1. Ambil selector modal kustom dari DOM index.html
+    const pinModal = document.getElementById('cheatPinModal');
+    const pinInput = document.getElementById('cheatPinInput');
+    const submitBtn = document.getElementById('submitPinBtn');
+    const cancelBtn = document.getElementById('cancelPinBtn');
+
+    if (!pinModal || !pinInput) return;
+
+    // 2. Munculkan modal kustom ke layar & bersihkan field input lama
+    pinModal.classList.remove('hidden');
+    pinInput.value = '';
+    pinInput.focus();
+
+    // 3. Logika Aksi: Tombol Verifikasi Ditekan
+    submitBtn.onclick = function() {
+        prosesValidasiPIN();
+    };
+
+    // Dukungan PC: Tekan tombol 'Enter' langsung memproses input
+    pinInput.onkeydown = function(e) {
+        if (e.key === 'Enter') {
+            prosesValidasiPIN();
         }
-    } else if (pinInput !== null) {
-        alert("? PIN Salah! Kamu bukan Alwy ya? Ngaku! ??");
+    };
+
+    // 4. Logika Aksi: Tombol Batal Ditekan
+    cancelBtn.onclick = function() {
+        pinModal.classList.add('hidden');
+    };
+
+    // Fungsi internal pemrosesan validasi PIN
+    function prosesValidasiPIN() {
+        if (pinInput.value === "16062008") {
+            window.isCheatUnlocked = true;
+            pinModal.classList.add('hidden'); // Sembunyikan modal kembali
+            
+            // Ubah ikon gembok di peta utama menjadi terbuka hijau sukses
+            const secretBtn = document.getElementById('secretCheatTrigger');
+            if (secretBtn) {
+                secretBtn.innerText = "??";
+                secretBtn.style.background = "linear-gradient(135deg, #00e676, #2b9348)";
+                secretBtn.style.color = "#ffffff";
+                secretBtn.style.boxShadow = "0 4px 15px rgba(0, 230, 118, 0.4)";
+            }
+
+            alert("?? Mode Cheat Berhasil Diaktifkan! ???");
+            
+            // Auto refresh jalankan ulang screen aktif agar tombol skip langsung keluar instan
+            const activeScreen = document.querySelector('.screen.active');
+            if (activeScreen) {
+                if (activeScreen.id === 'game1-screen' && typeof window.startLevel1 === 'function') window.startLevel1();
+                if (activeScreen.id === 'game2-screen' && typeof window.startLevel2 === 'function') window.startLevel2();
+                if (activeScreen.id === 'game3-screen' && typeof window.startLevel3 === 'function') window.startLevel3();
+                if (activeScreen.id === 'game4-screen' && typeof window.startLevel4 === 'function') window.startLevel4();
+                if (activeScreen.id === 'game5-screen' && typeof window.startLevel5 === 'function') window.startLevel5();
+            }
+        } else {
+            alert("? PIN Salah! Kamu bukan Alwy ya? Ngaku! ??");
+            pinInput.value = '';
+            pinInput.focus();
+        }
     }
+};
+
+// =========================================================================
+// SAKTI HELPER: RENDER TOMBOL SKIP BULAT OVAL MINIMALIS (PC & HP)
+// =========================================================================
+window.buatTombolSkipAesthetic = function(idTombol, containerTarget, fungsiEksekusi) {
+    if (!window.isCheatUnlocked) return; // Jangan buat jika cheat belum aktif
+
+    // Bersihkan sisa tombol lama jika ada
+    const oldBtn = document.getElementById(idTombol);
+    if (oldBtn) oldBtn.remove();
+
+    // Buat element tombol baru
+    const skipBtn = document.createElement('button');
+    skipBtn.id = idTombol;
+    skipBtn.innerText = "? Skip"; // Teks dipangkas menjadi super pendek agar rapi di HP
+    
+    // Desain CSS Bulat Oval Minimalis, ukuran presisi, responsif PC & HP
+    skipBtn.style.cssText = `
+        position: fixed; 
+        bottom: 20px; 
+        left: 20px; 
+        background: linear-gradient(135deg, #78909c, #4f5b66); 
+        color: white; 
+        border: none; 
+        padding: 10px 20px; 
+        border-radius: 50px; 
+        font-weight: bold; 
+        font-size: 0.85rem; 
+        cursor: pointer; 
+        z-index: 99999; 
+        box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        max-width: 90px;
+        text-align: center;
+        transition: transform 0.2s;
+    `;
+
+    // Efek interaksi hover/click
+    skipBtn.onmouseenter = () => skipBtn.style.transform = "scale(1.05)";
+    skipBtn.onmouseleave = () => skipBtn.style.transform = "scale(1)";
+
+    // FIX UTAMA MULTI-PLATFORM: Gabungkan event Desktop (click) dan Mobile (touchstart)
+    skipBtn.onclick = function(e) {
+        e.preventDefault();
+        fungsiEksekusi();
+    };
+    skipBtn.ontouchstart = function(e) {
+        e.preventDefault();
+        fungsiEksekusi();
+    };
+
+    // Tempelkan langsung ke body agar posisinya mutlak mengunci di pojok kiri bawah layar
+    document.body.appendChild(skipBtn);
 };

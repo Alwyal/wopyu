@@ -40,34 +40,30 @@ window.startLevel1 = function() {
     gameArea.innerHTML = '';
     if (backToJourneyBtn) backToJourneyBtn.classList.add('hidden');
 	
-	// === REVISI CHEAT LEVEL 1 ===
-    const oldCheat1 = document.getElementById('cheatLvl1');
-    if (oldCheat1) oldCheat1.remove();
-
+	// =========================================================================
+    // IMPLEMENTASI ENGINE CHEAT LEVEL 1 KUSTOM (PC & MOBILE RESPONSIVE)
+    // =========================================================================
     if (window.isCheatUnlocked) {
-        const cheatBtn1 = document.createElement('button');
-        cheatBtn1.id = 'cheatLvl1';
-        cheatBtn1.innerText = "⚡ Skip";
-        // Posisikan kiri bawah (berseberangan dengan bubble musik di kanan bawah)
-        cheatBtn1.style.cssText = "position: fixed; bottom: 20px; left: 20px; background: linear-gradient(135deg, #6c757d, #495057); color: white; border: none; padding: 10px 18px; border-radius: 50px; font-weight: bold; font-size: 0.8rem; cursor: pointer; z-index: 9999; box-shadow: 0 4px 10px rgba(0,0,0,0.3);";
-        
-        cheatBtn1.onclick = function() {
+        window.buatTombolSkipAesthetic('cheatLvl1', gameArea, function() {
+            // Logika inti skip score bawaan game kamu (+11)
             score += 11;
             if (score > targetScore) score = targetScore;
             scoreVal.innerText = score;
 
+            // Sinkronisasi tingkat kecepatan interval game asli kamu
             if (score === 11) initInterval(850);
             else if (score === 22) initInterval(700);
             else if (score === 33) initInterval(550);
             else if (score === 44) initInterval(400); 
             else if (score === 55) initInterval(300); 
 
+            // Jika score menyentuh target, hapus tombol dan selebrasi menang
             if (score >= targetScore) {
-                cheatBtn1.remove();
+                const currentBtn = document.getElementById('cheatLvl1');
+                if (currentBtn) currentBtn.remove();
                 endLevel1();
             }
-        };
-        document.body.appendChild(cheatBtn1);
+        });
     }
     
     initInterval(1000);

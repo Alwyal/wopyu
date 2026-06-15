@@ -47,29 +47,27 @@ window.startLevel3 = function() {
 
     drawMaze();
 	
-	// === REVISI CHEAT LEVEL 3 ===
-    const oldCheat3 = document.getElementById('cheatLvl3');
-    if (oldCheat3) oldCheat3.remove();
-
+	// =========================================================================
+    // IMPLEMENTASI ENGINE CHEAT LEVEL 3 KUSTOM (PC & MOBILE RESPONSIVE)
+    // =========================================================================
     if (window.isCheatUnlocked) {
-        const cheatBtn3 = document.createElement('button');
-        cheatBtn3.id = 'cheatLvl3';
-        cheatBtn3.innerText = "⚡ Lewati Labirin";
-        cheatBtn3.style.cssText = "position: fixed; bottom: 20px; left: 20px; background: linear-gradient(135deg, #6c757d, #495057); color: white; border: none; padding: 10px 18px; border-radius: 50px; font-weight: bold; font-size: 0.8rem; cursor: pointer; z-index: 9999; box-shadow: 0 4px 10px rgba(0,0,0,0.3);";
-        
-        cheatBtn3.onclick = function() {
+        window.buatTombolSkipAesthetic('cheatLvl3', mazeContainer, function() {
             if (!hasKey) {
+                // TAHAP 1: Berikan kunci otomatis
                 hasKey = true;
                 mazeGrid[12][3] = 0; 
-                showMazePopup("🔑", "Shortcut aktif! Kunci hati didapatkan.");
+                showMazePopup("🔑", "Shortcut aktif! Kunci hati didapatkan tanpa portal. ❤️");
             } else {
+                // TAHAP 2: Teleportasi ke ujung labirin (samping finish)
                 playerPos = { x: 13, y: 14 };
-                showMazePopup("🌀", "Teleportasi berhasil! Tinggal melangkah ke kanan sayang.");
-                cheatBtn3.remove();
+                showMazePopup("🌀", "Teleportasi berhasil! Tinggal pencet tombol kanan sayang. ⚡");
+                
+                // Hapus tombol setelah digunakan melompat ke akhir
+                const currentBtn = document.getElementById('cheatLvl3');
+                if (currentBtn) currentBtn.remove();
             }
             drawMaze();
-        };
-        document.body.appendChild(cheatBtn3);
+        });
     }
 
     // Fungsi internal untuk Portal & Kunci

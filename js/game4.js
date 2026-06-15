@@ -237,22 +237,17 @@ window.startLevel4 = function () {
         }, 400);
     }
 	
-	// === REVISI CHEAT LEVEL 4 ===
-    const oldCheat4 = document.getElementById('cheatLvl4');
-    if (oldCheat4) oldCheat4.remove();
-
+	// =========================================================================
+    // IMPLEMENTASI ENGINE CHEAT LEVEL 4 KUSTOM (PC & MOBILE RESPONSIVE)
+    // =========================================================================
     if (window.isCheatUnlocked) {
-        const cheatBtn4 = document.createElement('button');
-        cheatBtn4.id = 'cheatLvl4';
-        cheatBtn4.innerText = "⚡ Pasang 6 Gambar";
-        cheatBtn4.style.cssText = "position: fixed; bottom: 20px; left: 20px; background: linear-gradient(135deg, #6c757d, #495057); color: white; border: none; padding: 10px 18px; border-radius: 50px; font-weight: bold; font-size: 0.8rem; cursor: pointer; z-index: 9999; box-shadow: 0 4px 10px rgba(0,0,0,0.3);";
-        
-        cheatBtn4.onclick = function() {
+        window.buatTombolSkipAesthetic('cheatLvl4', puzzleBoard, function() {
             const targetSlots = Array.from(puzzleBoard.querySelectorAll('.puzzle-slot'));
             let kepinganTerpasang = 0;
 
             for (let i = 0; i < targetSlots.length; i++) {
-                if (kepinganTerpasang >= 6) break;
+                if (kepinganTerpasang >= 6) break; // Batasi tetap mencicil 6 kepingan per klik
+                
                 const slot = targetSlots[i];
                 const correctId = slot.dataset.correctId;
                 const piece = scatteredArea.querySelector(`#piece-${correctId}`);
@@ -265,11 +260,13 @@ window.startLevel4 = function () {
                     kepinganTerpasang++;
                 }
             }
+
+            // Jika semua sudah terpasang rapi, hapus tombol dan pemicu selebrasi menang
             if (correctPiecesCount === TOTAL_PIECES) {
-                cheatBtn4.remove();
+                const currentBtn = document.getElementById('cheatLvl4');
+                if (currentBtn) currentBtn.remove();
                 endLevel4();
             }
-        };
-        document.body.appendChild(cheatBtn4);
+        });
     }
 };
