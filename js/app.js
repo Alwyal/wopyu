@@ -383,25 +383,47 @@ window.showGlobalGamePopup = function(icon, title, message, nextLevel) {
 window.isCheatUnlocked = false; // Status awal cheat terkunci
 
 window.bukaAksesCheatGlobal = function() {
-    if (window.isCheatUnlocked) {
-        alert("? Status: Mode Cheat sudah aktif, Yuu meluncur ke level game~??");
-        return;
-    }
-
-    // 1. Ambil selector modal kustom dari DOM index.html
+    // 1. Ambil semua selector modal kustom dari DOM
     const pinModal = document.getElementById('cheatPinModal');
     const pinInput = document.getElementById('cheatPinInput');
     const submitBtn = document.getElementById('submitPinBtn');
     const cancelBtn = document.getElementById('cancelPinBtn');
+    
+    // Selector komponen internal modal untuk mengubah konten secara dinamis
+    const modalIcon = pinModal.querySelector('.maze-modal-icon');
+    const modalTitle = pinModal.querySelector('h3');
+    const modalText = pinModal.querySelector('p');
 
     if (!pinModal || !pinInput) return;
 
-    // 2. Munculkan modal kustom ke layar & bersihkan field input lama
+    // Jika cheat sudah aktif dan tombol gembok ditekan lagi
+    if (window.isCheatUnlocked) {
+        modalIcon.innerText = "??";
+        modalTitle.innerText = "Sudah Aktif! ??";
+        modalText.innerText = "Status: Mode Developer sudah aktif, Alwy! Tinggal meluncur ke level game yaa~";
+        pinInput.style.display = 'none'; // Sembunyikan input karena sudah aktif
+        submitBtn.style.display = 'none'; // Sembunyikan tombol verifikasi
+        cancelBtn.innerText = "Oke Sayang ??"; // Ubah teks tombol batal jadi oke
+        
+        pinModal.classList.remove('hidden');
+        cancelBtn.onclick = function() { pinModal.classList.add('hidden'); };
+        return;
+    }
+
+    // Kembalikan tampilan modal ke mode input normal (jika sebelumnya habis eror/reset)
+    modalIcon.innerText = "??";
+    modalTitle.innerText = "Mode Developer";
+    modalText.innerText = "Masukkan PIN Rahasia Mas Alwy untuk membuka fitur rahasia:";
+    pinInput.style.style.display = 'block';
+    submitBtn.style.display = 'block';
+    cancelBtn.innerText = "Batal ??";
+
+    // Munculkan modal kustom ke layar & fokus ke input
     pinModal.classList.remove('hidden');
     pinInput.value = '';
     pinInput.focus();
 
-    // 3. Logika Aksi: Tombol Verifikasi Ditekan
+    // Logika Aksi: Tombol Verifikasi Ditekan
     submitBtn.onclick = function() {
         prosesValidasiPIN();
     };
@@ -413,16 +435,24 @@ window.bukaAksesCheatGlobal = function() {
         }
     };
 
-    // 4. Logika Aksi: Tombol Batal Ditekan
+    // Logika Aksi: Tombol Batal/Tutup Ditekan
     cancelBtn.onclick = function() {
         pinModal.classList.add('hidden');
     };
 
-    // Fungsi internal pemrosesan validasi PIN
+    // Fungsi internal pemrosesan validasi PIN tanpa ALERT browser
     function prosesValidasiPIN() {
         if (pinInput.value === "16062008") {
             window.isCheatUnlocked = true;
-            pinModal.classList.add('hidden'); // Sembunyikan modal kembali
+            
+            // TAMPILKAN STATE SUKSES DI DALAM MODAL
+            modalIcon.innerText = "??";
+            modalTitle.style.color = "#00e676";
+            modalTitle.innerText = "Sukses! ???";
+            modalText.innerText = "Mode Cheat Berhasil Diaktifkan! Semua tombol skip di level game sudah terbuka.";
+            pinInput.style.display = 'none';
+            submitBtn.style.display = 'none';
+            cancelBtn.innerText = "Gaskeunnn ??";
             
             // Ubah ikon gembok di peta utama menjadi terbuka hijau sukses
             const secretBtn = document.getElementById('secretCheatTrigger');
@@ -433,21 +463,33 @@ window.bukaAksesCheatGlobal = function() {
                 secretBtn.style.boxShadow = "0 4px 15px rgba(0, 230, 118, 0.4)";
             }
 
-            alert("?? Mode Cheat Berhasil Diaktifkan! ???");
-            
-            // Auto refresh jalankan ulang screen aktif agar tombol skip langsung keluar instan
-            const activeScreen = document.querySelector('.screen.active');
-            if (activeScreen) {
-                if (activeScreen.id === 'game1-screen' && typeof window.startLevel1 === 'function') window.startLevel1();
-                if (activeScreen.id === 'game2-screen' && typeof window.startLevel2 === 'function') window.startLevel2();
-                if (activeScreen.id === 'game3-screen' && typeof window.startLevel3 === 'function') window.startLevel3();
-                if (activeScreen.id === 'game4-screen' && typeof window.startLevel4 === 'function') window.startLevel4();
-                if (activeScreen.id === 'game5-screen' && typeof window.startLevel5 === 'function') window.startLevel5();
-            }
+            // Saat tombol "Gaskeunnn" diklik, baru tutup modal dan refresh game screen
+            cancelBtn.onclick = function() {
+                pinModal.classList.add('hidden');
+                
+                // Kembalikan warna judul ke pink untuk sesi berikutnya
+                modalTitle.style.color = "#ff4d88"; 
+
+                // Auto refresh screen aktif jika ada
+                const activeScreen = document.querySelector('.screen.active');
+                if (activeScreen) {
+                    if (activeScreen.id === 'game1-screen' && typeof window.startLevel1 === 'function') window.startLevel1();
+                    if (activeScreen.id === 'game2-screen' && typeof window.startLevel2 === 'function') window.startLevel2();
+                    if (activeScreen.id === 'game3-screen' && typeof window.startLevel3 === 'function') window.startLevel3();
+                    if (activeScreen.id === 'game4-screen' && typeof window.startLevel4 === 'function') window.startLevel4();
+                    if (activeScreen.id === 'game5-screen' && typeof window.startLevel5 === 'function') window.startLevel5();
+                }
+            };
         } else {
-            alert("? PIN Salah! Kamu bukan Alwy ya? Ngaku! ??");
+            // TAMPILKAN STATE ERROR DI DALAM MODAL (PIN SALAH)
+            modalIcon.innerText = "??";
+            modalTitle.innerText = "PIN Salah! ?";
+            modalText.innerText = "Kamu bukan Alwy ya? Ngaku! Jangan coba-coba tebak komitmen kita! ??";
             pinInput.value = '';
             pinInput.focus();
+            
+            // Getar HP jika salah (opsional bawaan sitemmu)
+            if (navigator.vibrate) navigator.vibrate([50, 50]);
         }
     }
 };
