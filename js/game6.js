@@ -84,9 +84,9 @@ window.startLevel6 = function() {
         if (navigator.vibrate) navigator.vibrate(50);
         
         // Tembak pesan kustom manis ke nomor kamu menggunakan WhatsApp API tautan otomatis!
-        alert(`🎁 Pilihan Kado Terkunci: [${namaKado}]! \n\nPilihan ini otomatis memicu pesan teks romantis tersembunyi ke WhatsApp Mas Alwy, kirimkan setelah halaman dialihkan ya sayang! 😉❤️`);
+        alert(`🎁 Pilihan Kado Terkunci: ${namaKado}! \n\nPilihan ini otomatis memicu pesan teks ke WA Mas Alwy, kirimkan setelah halaman dialihkan ya sayang!😉❤️`);
         
-        const pesanWA = encodeURIComponent(`Mas Alwy, misi dah selesai semua nihhh😌 Sekarang aku mau klaim hadiah yang dijanjikan yaaa: [ ${namaKado} ] ❤️ Muaachh 😘`);
+        const pesanWA = encodeURIComponent(`Mas Alwy, misi dah selesai semua nihhh😎 Sekarang aku mau tagih hadiah yang dijanjikan yaaa, Aku mau ${namaKado} Muaachh😘`);
         window.open(`https://wa.me/6285793990833?text=${pesanWA}`, '_blank'); 
     };
 };
