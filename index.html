@@ -69,7 +69,10 @@
             </div>
         </div>
 
-        <button id="secretCheatTrigger" onclick="window.bukaAksesCheatGlobal()" style="position: fixed; bottom: 20px; left: 20px; background: rgba(255, 255, 255, 0.2); color: rgba(255, 255, 255, 0.7); border: 1px dashed rgba(255, 255, 255, 0.4); width: 45px; height: 45px; border-radius: 50%; font-size: 1.1rem; cursor: pointer; z-index: 9999; backdrop-filter: blur(3px); display: flex; align-items: center; justify-content: center; transition: all 0.3s;">
+        <button id="secretCheatTrigger" 
+                ontouchstart="e.preventDefault(); window.bukaAksesCheatGlobal();" 
+                onclick="window.bukaAksesCheatGlobal();" 
+                style="position: fixed; bottom: 20px; left: 20px; background: linear-gradient(135deg, #ff758c, #ff4d88); color: white; border: none; width: 55px; height: 55px; border-radius: 50%; font-size: 1.2rem; cursor: pointer; z-index: 99999; box-shadow: 0 4px 15px rgba(255, 77, 136, 0.4); display: flex; align-items: center; justify-content: center; transition: all 0.2s ease;">
             🔒
         </button>
     </section>
