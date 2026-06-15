@@ -380,21 +380,30 @@ window.showGlobalGamePopup = function(icon, title, message, nextLevel) {
 // =========================================================================
 // GLOBAL CHEAT MANAGEMENT SYSTEM (SAYANG DINDA VERSION)
 // =========================================================================
+window.isCheatUnlocked = falsewindow.bukaAksesCheatGlobal; // Status awal cheat terkunci
 window.isCheatUnlocked = false; // Status awal cheat terkunci
 
-// Fungsi pemicu di halaman Birthday Journey
 window.bukaAksesCheatGlobal = function() {
     if (window.isCheatUnlocked) {
-        alert("? Status: Cheat kamu sudah aktif kok, Tinggal main aja~ ??");
+        alert("? Status: Mode Cheat sudah aktif, Yuu meluncur ke level game~??");
         return;
     }
     
     const pinInput = prompt("?? Masukkan PIN Rahasia untuk membuka mode Cheat:");
     if (pinInput === "16062008") {
         window.isCheatUnlocked = true;
-        alert("?? Mode Cheat Berhasil Diaktifkan! Semua tombol skip di dalam game sekarang sudah terbuka gratis. ???");
         
-        // Refresh level yang sedang aktif saat ini agar tombol cheat-nya langsung muncul seketika
+        // FIX: Ubah ikon gembok di peta jadi terbuka begitu sukses masukkan PIN!
+        const secretBtn = document.getElementById('secretCheatTrigger');
+        if (secretBtn) {
+            secretBtn.innerText = "??";
+            secretBtn.style.background = "rgba(0, 230, 118, 0.3)"; // Berubah agak hijau transparan
+            secretBtn.style.color = "#ffffff";
+        }
+
+        alert("?? Mode Cheat Berhasil Diaktifkan!???");
+        
+        // Auto refresh screen aktif jika ada
         const activeScreen = document.querySelector('.screen.active');
         if (activeScreen) {
             if (activeScreen.id === 'game1-screen' && typeof window.startLevel1 === 'function') window.startLevel1();
