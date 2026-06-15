@@ -2,6 +2,35 @@
 window.currentUnlockedLevel = 1;
 
 document.addEventListener("DOMContentLoaded", () => {
+    // =========================================================================
+    // LOGIKA WELCOME GATE UNTUK MEMICU AUTOPLAY MUSIK (ANTI-BLOCK BROWSER)
+    // =========================================================================
+    const welcomeGate = document.getElementById('welcomeGate');
+    const openWelcomeGateBtn = document.getElementById('openWelcomeGateBtn');
+    const globalAudio = document.getElementById('bgMusic');
+    const musicBubble = document.getElementById('musicBubble');
+
+    if (openWelcomeGateBtn && welcomeGate) {
+        openWelcomeGateBtn.addEventListener('click', () => {
+            // Sembunyikan popup Welcome Gate dengan efek transisi/hilang
+            welcomeGate.style.display = 'none';
+
+            // Pemicu paksa audio agar langsung berputar otomatis (Aman dari Autoplay Policy)
+            if (globalAudio) {
+                globalAudio.play().then(() => {
+                    window.isMusicPlaying = true; // Sinkronkan status musik menyala
+                    if (musicBubble) musicBubble.classList.add('playing');
+                    
+                    // Set tombol play/pause di modal player ke mode pause (⏸️) karena lagu menyala
+                    const playPauseBtn = document.getElementById('playPauseTrackBtn');
+                    if (playPauseBtn) playPauseBtn.innerText = "⏸️";
+                }).catch(err => {
+                    console.log("Gagal memutar audio otomatis, browser masih memblokir:", err);
+                });
+            }
+        });
+    }
+
     // Element Selector Screens
     const introScreen = document.getElementById('intro');
     const journeyScreen = document.getElementById('journey');
