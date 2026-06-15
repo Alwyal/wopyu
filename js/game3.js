@@ -59,8 +59,8 @@ window.startLevel3 = function() {
                 showMazePopup("🔑", "Shortcut aktif! Kunci hati didapatkan tanpa portal. ❤️");
             } else {
                 // TAHAP 2: Teleportasi ke ujung labirin (samping finish)
-                playerPos = { x: 13, y: 14 };
-                showMazePopup("🌀", "Teleportasi berhasil! Tinggal pencet tombol kanan sayang. ⚡");
+                playerPos = { x: 14, y: 13 };
+                showMazePopup("🌀", "Teleportasi berhasil! Sepele⚡");
                 
                 // Hapus tombol setelah digunakan melompat ke akhir
                 const currentBtn = document.getElementById('cheatLvl3');
