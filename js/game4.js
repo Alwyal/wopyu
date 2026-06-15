@@ -8,6 +8,7 @@ window.startLevel4 = function () {
 
     let correctPiecesCount = 0;
 
+    // reset
     puzzleBoard.innerHTML = '';
     scatteredArea.innerHTML = '';
 
@@ -18,80 +19,61 @@ window.startLevel4 = function () {
     puzzleBoard.style.opacity = '1';
 
     // =========================
-    // BUAT SLOT
+    // CREATE SLOT
     // =========================
-
     for (let i = 0; i < TOTAL_PIECES; i++) {
         const slot = document.createElement('div');
 
         slot.classList.add('puzzle-slot');
-        slot.dataset.correctId = i;
+        slot.dataset.correctId = String(i);
 
-        slot.addEventListener('dragenter', e => e.preventDefault());
         slot.addEventListener('dragover', e => e.preventDefault());
+        slot.addEventListener('dragenter', e => e.preventDefault());
         slot.addEventListener('drop', handleDrop);
 
         puzzleBoard.appendChild(slot);
     }
 
     // =========================
-    // DATA PIECES
+    // PIECES DATA
     // =========================
-
-    const piecesData = Array.from(
-        { length: TOTAL_PIECES },
-        (_, i) => i
-    );
-
+    const piecesData = Array.from({ length: TOTAL_PIECES }, (_, i) => i);
     shuffle(piecesData);
 
     const boardWidth = puzzleBoard.offsetWidth || 360;
     const pieceSize = boardWidth / GRID_SIZE;
 
     // =========================
-    // RENDER PIECES
+    // CREATE PIECES
     // =========================
-
     piecesData.forEach(pieceId => {
 
         const piece = document.createElement('div');
 
         piece.classList.add('puzzle-piece-jigsaw');
-
         piece.id = `piece-${pieceId}`;
-        piece.dataset.pieceId = pieceId;
+        piece.dataset.pieceId = String(pieceId);
         piece.dataset.locked = "false";
-
         piece.draggable = true;
 
-        const row = Math.floor(pieceId / GRID_SIZE);
-        const col = pieceId % GRID_SIZE;
+        const r = Math.floor(pieceId / GRID_SIZE);
+        const c = pieceId % GRID_SIZE;
 
         piece.style.backgroundPosition =
-            `${-(col * pieceSize)}px ${-(row * pieceSize)}px`;
+            `${-(c * pieceSize)}px ${-(r * pieceSize)}px`;
 
         // =========================
-        // DESKTOP
+        // DESKTOP DRAG
         // =========================
-
         piece.addEventListener('dragstart', e => {
-
-            if (
-                piece.dataset.locked === "true" ||
-                piece.draggable === false
-            ) {
+            if (piece.dataset.locked === "true") {
                 e.preventDefault();
                 return;
             }
 
-            e.dataTransfer.setData(
-                'text/plain',
-                piece.id
-            );
+            e.dataTransfer.setData('text/plain', piece.id);
 
-            setTimeout(() => {
-                piece.classList.add('dragging');
-            }, 0);
+            setTimeout(() => piece.classList.add('dragging'), 0);
         });
 
         piece.addEventListener('dragend', () => {
@@ -99,11 +81,9 @@ window.startLevel4 = function () {
         });
 
         // =========================
-        // MOBILE
+        // MOBILE TOUCH
         // =========================
-
         piece.addEventListener('touchstart', e => {
-
             if (piece.dataset.locked === "true") return;
 
             e.preventDefault();
@@ -113,25 +93,14 @@ window.startLevel4 = function () {
 
             piece.classList.add('dragging');
 
-            piece.dataset.touchOffsetX =
-                touch.clientX - rect.left;
-
-            piece.dataset.touchOffsetY =
-                touch.clientY - rect.top;
+            piece.dataset.offsetX = touch.clientX - rect.left;
+            piece.dataset.offsetY = touch.clientY - rect.top;
 
             piece.style.position = 'fixed';
             piece.style.zIndex = '9999';
-
-            piece.style.left =
-                (touch.clientX - Number(piece.dataset.touchOffsetX)) + 'px';
-
-            piece.style.top =
-                (touch.clientY - Number(piece.dataset.touchOffsetY)) + 'px';
-
         }, { passive: false });
 
         piece.addEventListener('touchmove', e => {
-
             if (!piece.classList.contains('dragging')) return;
 
             e.preventDefault();
@@ -139,38 +108,35 @@ window.startLevel4 = function () {
             const touch = e.touches[0];
 
             piece.style.left =
-                (touch.clientX - Number(piece.dataset.touchOffsetX)) + 'px';
+                (touch.clientX - Number(piece.dataset.offsetX)) + 'px';
 
             piece.style.top =
-                (touch.clientY - Number(piece.dataset.touchOffsetY)) + 'px';
+                (touch.clientY - Number(piece.dataset.offsetY)) + 'px';
 
         }, { passive: false });
 
         piece.addEventListener('touchend', e => {
-
-            if (
-                !piece.classList.contains('dragging') ||
-                piece.dataset.locked === "true"
-            ) {
-                return;
-            }
+            if (!piece.classList.contains('dragging')) return;
 
             piece.classList.remove('dragging');
 
-            piece.style.position = '';
-            piece.style.left = '';
-            piece.style.top = '';
-            piece.style.zIndex = '';
-
             const touch = e.changedTouches[0];
+
+            // 🔥 FIX UTAMA: sembunyikan sementara agar slot terbaca benar
+            piece.style.visibility = 'hidden';
 
             const dropTarget = document.elementFromPoint(
                 touch.clientX,
                 touch.clientY
             );
 
-            const targetSlot =
-                dropTarget?.closest('.puzzle-slot');
+            piece.style.visibility = '';
+            piece.style.position = '';
+            piece.style.left = '';
+            piece.style.top = '';
+            piece.style.zIndex = '';
+
+            const targetSlot = dropTarget?.closest('.puzzle-slot');
 
             if (!targetSlot) {
                 scatteredArea.appendChild(piece);
@@ -178,7 +144,6 @@ window.startLevel4 = function () {
             }
 
             placePiece(targetSlot, piece);
-
         }, { passive: false });
 
         scatteredArea.appendChild(piece);
@@ -187,137 +152,78 @@ window.startLevel4 = function () {
     // =========================
     // DESKTOP DROP
     // =========================
-
     function handleDrop(e) {
-
         e.preventDefault();
 
-        let targetSlot = e.target;
+        const pieceId = e.dataTransfer.getData('text/plain');
+        const piece = document.getElementById(pieceId);
 
-        if (
-            targetSlot.classList.contains(
-                'puzzle-piece-jigsaw'
-            )
-        ) {
-            targetSlot = targetSlot.parentNode;
-        }
+        const slot = e.target.closest('.puzzle-slot');
+        if (!piece || !slot) return;
 
-        const draggedId =
-            e.dataTransfer.getData('text/plain');
-
-        const piece =
-            document.getElementById(draggedId);
-
-        if (
-            !piece ||
-            !targetSlot.classList.contains('puzzle-slot')
-        ) {
-            return;
-        }
-
-        placePiece(targetSlot, piece);
+        placePiece(slot, piece);
     }
 
     // =========================
-    // VALIDASI PENEMPATAN
+    // CORE LOGIC
     // =========================
+    function placePiece(slot, piece) {
 
-    function placePiece(targetSlot, piece) {
+        const pieceId = Number(piece.dataset.pieceId);
+        const correctId = Number(slot.dataset.correctId);
 
-        if (piece.dataset.locked === "true") {
-            return;
-        }
+        const existing = slot.querySelector('.puzzle-piece-jigsaw');
 
-        const pieceId = piece.dataset.pieceId;
-        const correctId = targetSlot.dataset.correctId;
-
-        const existingPiece =
-            targetSlot.querySelector(
-                '.puzzle-piece-jigsaw'
-            );
-
-        if (existingPiece && existingPiece !== piece) {
-
-            if (navigator.vibrate) {
-                navigator.vibrate([40, 20]);
-            }
-
+        // slot sudah ditempati piece lain
+        if (existing && existing !== piece) {
             scatteredArea.appendChild(piece);
             return;
         }
 
+        if (piece.dataset.locked === "true") return;
+
         if (pieceId === correctId) {
 
-            targetSlot.appendChild(piece);
+            slot.appendChild(piece);
 
             piece.dataset.locked = "true";
             piece.draggable = false;
 
-            piece.classList.remove('dragging');
-
             correctPiecesCount++;
 
-            if (navigator.vibrate) {
-                navigator.vibrate(15);
-            }
+            if (navigator.vibrate) navigator.vibrate(15);
 
-            if (correctPiecesCount >= TOTAL_PIECES) {
+            if (correctPiecesCount === TOTAL_PIECES) {
                 endLevel4();
             }
 
         } else {
-
-            piece.classList.remove('dragging');
-
-            if (navigator.vibrate) {
-                navigator.vibrate([40, 20]);
-            }
-
             scatteredArea.appendChild(piece);
+            if (navigator.vibrate) navigator.vibrate([40, 20]);
         }
     }
 
     // =========================
     // SHUFFLE FIX
     // =========================
-
     function shuffle(array) {
-
         for (let i = array.length - 1; i > 0; i--) {
-
-            const j =
-                Math.floor(Math.random() * (i + 1));
-
-            [array[i], array[j]] =
-                [array[j], array[i]];
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
         }
-
-        return array;
     }
 
     // =========================
-    // FINISH
+    // END GAME
     // =========================
-
     function endLevel4() {
-
         setTimeout(() => {
-
-            puzzleBoard
-                .querySelectorAll('.puzzle-slot')
-                .forEach(slot => {
-                    slot.style.border = 'none';
-                });
-
-            puzzleBoard.style.border = 'none';
+            puzzleBoard.querySelectorAll('.puzzle-slot')
+                .forEach(s => s.style.border = "none");
 
             scatteredArea.innerHTML = '';
-            scatteredArea.style.background = 'none';
 
-            if (
-                typeof window.showGlobalGamePopup ===
-                'function'
-            ) {
+            if (typeof window.showGlobalGamePopup === 'function') {
                 window.showGlobalGamePopup(
                     "🤭",
                     "HOREEE GEMES BANGET!",
@@ -325,7 +231,6 @@ window.startLevel4 = function () {
                     5
                 );
             }
-
         }, 400);
     }
 };
