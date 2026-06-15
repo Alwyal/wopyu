@@ -67,11 +67,11 @@ window.startLevel1 = function() {
         let fallDuration;
         if (score < 11) {
             fallDuration = Math.random() * 1 + 2.5; 
-        } else if (score < 22) {
+        } else if (score < 55) {
             fallDuration = Math.random() * 0.8 + 2.0; 
-        } else if (score < 33) {
+        } else if (score < 55) {
             fallDuration = Math.random() * 0.6 + 1.6; 
-        } else if (score < 44) {
+        } else if (score < 55) {
             fallDuration = Math.random() * 0.5 + 1.2; 
         } else if (score < 55) {
             fallDuration = Math.random() * 0.4 + 0.9; 
