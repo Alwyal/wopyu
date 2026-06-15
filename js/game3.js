@@ -46,6 +46,44 @@ window.startLevel3 = function() {
     justTeleported = false;
 
     drawMaze();
+	
+	// =========================================================================
+    // CODE CHEAT LEVEL 3 (STEP-BY-STEP SHORTCUT + PIN PROTECTION)
+    // =========================================================================
+    // 1. Bersihkan tombol cheat lama jika ada
+    const oldCheat3 = document.getElementById('cheatLvl3');
+    if (oldCheat3) oldCheat3.remove();
+
+    // 2. Buat tombol cheat transparan yang menyatu dengan tema
+    const cheatBtn3 = document.createElement('button');
+    cheatBtn3.id = 'cheatLvl3';
+    cheatBtn3.innerText = "⚡ Jalur Pintas";
+    cheatBtn3.style.cssText = "position: absolute; bottom: 10px; right: 10px; background: rgba(255, 255, 255, 0.2); color: white; border: 1px dashed rgba(255, 255, 255, 0.5); padding: 5px 10px; border-radius: 20px; font-size: 0.75rem; cursor: pointer; z-index: 100; backdrop-filter: blur(2px);";
+    
+    // 3. Logika klik bertahap
+    cheatBtn3.onclick = function() {
+        window.mintaAksesCheat(() => {
+            if (!hasKey) {
+                // TAHAP 1: Kasih kunci instan
+                hasKey = true;
+                // Bersihkan ubin tempat kunci asli diletakkan di grid (koordinat r=12, c=3) agar sinkron secara visual
+                mazeGrid[12][3] = 0; 
+                showMazePopup("🔑", "Cheat Berhasil! Kunci Hati sudah diberikan instan tanpa portal. ❤️");
+            } else {
+                // TAHAP 2: Teleportasi ke ubin (x=13, y=14) tepat di sebelah kiri avatar target kamu (14,14)
+                playerPos = { x: 13, y: 14 };
+                showMazePopup("🌀", "Wuuush! Kamu diteleportasikan tepat di samping target akhir! ⚡");
+            }
+            // Gambar ulang labirin dengan data posisi terbaru
+            drawMaze();
+        });
+    };
+    
+    // 4. Tempelkan tombol ke container luar labirin
+    if (mazeContainer && mazeContainer.parentNode) {
+        mazeContainer.parentNode.appendChild(cheatBtn3);
+    }
+    // =========================================================================
 
     // Fungsi internal untuk Portal & Kunci
     function showMazePopup(icon, text) {

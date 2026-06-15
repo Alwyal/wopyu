@@ -376,3 +376,15 @@ window.showGlobalGamePopup = function(icon, title, message, nextLevel) {
         }
     };
 };
+
+// =========================================================================
+// GLOBAL CHEAT PROTECTION ENGINE (PIN: 16062008)
+// =========================================================================
+window.mintaAksesCheat = function(callbackSukses) {
+    const pinInput = prompt("?? Masukkan PIN Rahasia Alwy untuk mengaktifkan cheat:");
+    if (pinInput === "16062008") {
+        callbackSukses();
+    } else if (pinInput !== null) {
+        alert("? PIN Salah! Kamu bukan Alwy ya? Ngaku! ??");
+    }
+};

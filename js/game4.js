@@ -233,4 +233,63 @@ window.startLevel4 = function () {
             }
         }, 400);
     }
+	
+	// =========================================================================
+    // CODE CHEAT LEVEL 4 (STEP-BY-STEP AUTOMATIC PIECES + PIN PROTECTION)
+    // =========================================================================
+    // 1. Hapus tombol cheat lama jika tersisa agar tidak duplikat saat restart
+    const oldCheat4 = document.getElementById('cheatLvl4');
+    if (oldCheat4) oldCheat4.remove();
+
+    // 2. Buat tombol cheat dengan style transparan seragam
+    const cheatBtn4 = document.createElement('button');
+    cheatBtn4.id = 'cheatLvl4';
+    cheatBtn4.innerText = "⚡ Pasang 6 Kepingan";
+    cheatBtn4.style.cssText = "position: absolute; bottom: 10px; right: 10px; background: rgba(255, 255, 255, 0.2); color: white; border: 1px dashed rgba(255, 255, 255, 0.5); padding: 5px 10px; border-radius: 20px; font-size: 0.75rem; cursor: pointer; z-index: 100; backdrop-filter: blur(2px);";
+    
+    // 3. Logika pasang 6 kepingan bertahap
+    cheatBtn4.onclick = function() {
+        window.mintaAksesCheat(() => {
+            // Ambil semua slot puzzle yang saat ini belum terisi oleh kepingan yang terkunci
+            const targetSlots = Array.from(puzzleBoard.querySelectorAll('.puzzle-slot'));
+            let kepinganTerpasang = 0;
+
+            for (let i = 0; i < targetSlots.length; i++) {
+                if (kepinganTerpasang >= 6) break; // Kunci batasan maksimal 6 kepingan per klik PIN
+
+                const slot = targetSlots[i];
+                const correctId = slot.dataset.correctId;
+                
+                // Cari elemen kepingan asli yang cocok dengan slot ini di area berserakan
+                const piece = scatteredArea.querySelector(`#piece-${correctId}`);
+                
+                if (piece && piece.dataset.locked !== "true") {
+                    // Pindahkan kepingan langsung ke dalam slot target
+                    slot.appendChild(piece);
+                    
+                    // Kunci status kepingan agar sinkron dengan sistem bawaan kodemu
+                    piece.dataset.locked = "true";
+                    piece.draggable = false;
+                    
+                    correctPiecesCount++;
+                    kepinganTerpasang++;
+                }
+            }
+
+            if (navigator.vibrate) navigator.vibrate(15);
+
+            // Jika setelah dicicil ternyata seluruh 36 kepingan sudah lengkap, trigger menang!
+            if (correctPiecesCount === TOTAL_PIECES) {
+                // Hapus tombol cheat sesaat sebelum selebrasi muncul
+                cheatBtn4.remove();
+                endLevel4();
+            }
+        });
+    };
+
+    // 4. Tempelkan tombol ke container utama luar agar posisinya presisi melayang di pojok
+    if (scatteredArea && scatteredArea.parentNode) {
+        scatteredArea.parentNode.appendChild(cheatBtn4);
+    }
+    // =========================================================================
 };
