@@ -403,7 +403,7 @@ window.bukaAksesCheatGlobal = function() {
             modalTitle.innerText = "Sudah Aktif! ❤️";
             modalTitle.style.color = "#ff4d88";
         }
-        if (modalText) modalText.innerText = "Status: Mode Developer sudah aktif, Alwy! Tinggal meluncur ke level game yaa~";
+        if (modalText) modalText.innerText = "Status: Mode Cheat sudah aktif, Tinggal meluncur ke level game yaa~";
         
         pinInput.style.display = 'none'; // Sembunyikan input karena sudah aktif
         submitBtn.style.display = 'none'; // Sembunyikan tombol verifikasi
@@ -418,10 +418,10 @@ window.bukaAksesCheatGlobal = function() {
     // FIX UTAMA: Bersihkan typo .style.style dan kembalikan semua display ke normal (block/flex)
     if (modalIcon) modalIcon.innerText = "🔒";
     if (modalTitle) {
-        modalTitle.innerText = "Mode Developer";
+        modalTitle.innerText = "Mode Cheat";
         modalTitle.style.color = "#ff4d88";
     }
-    if (modalText) modalText.innerText = "Masukkan PIN Rahasia Mas Alwy untuk membuka fitur rahasia:";
+    if (modalText) modalText.innerText = "Masukkan PIN Rahasia untuk membuka fitur rahasia:";
     
     pinInput.style.display = 'block';
     submitBtn.style.display = 'block';
@@ -519,7 +519,7 @@ window.buatTombolSkipAesthetic = function(idTombol, containerTarget, fungsiEksek
     // Buat element tombol baru
     const skipBtn = document.createElement('button');
     skipBtn.id = idTombol;
-    skipBtn.innerText = "? Skip"; // Teks dipangkas menjadi super pendek agar rapi di HP
+    skipBtn.innerText = "⚡ Skip"; // Teks dipangkas menjadi super pendek agar rapi di HP
     
     // Desain CSS Bulat Oval Minimalis, ukuran presisi, responsif PC & HP
     skipBtn.style.cssText = `
