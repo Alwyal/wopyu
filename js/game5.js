@@ -209,6 +209,9 @@ window.startLevel5 = function() {
 
     if (finishLevel5Btn) {
         finishLevel5Btn.onclick = function() {
+			const b = document.getElementById('cheatLvl5');
+            if (b) b.remove()
+			
             // 1. Tetap buka gembok Level 6 di sistem agar status tersimpan aman
             window.currentUnlockedLevel = 6;
             if (typeof window.updateLevelStatus === 'function') {
@@ -236,45 +239,28 @@ window.startLevel5 = function() {
 
     loadQuestion();
 	
-	// =========================================================================
-    // CODE CHEAT LEVEL 5 (STEP-BY-STEP AUTO CORRECT + PIN PROTECTION)
-    // =========================================================================
-    // 1. Bersihkan tombol cheat lama jika tersisa agar tidak duplikat saat restart
+	// === REVISI CHEAT LEVEL 5 ===
     const oldCheat5 = document.getElementById('cheatLvl5');
     if (oldCheat5) oldCheat5.remove();
 
-    // 2. Buat tombol cheat dengan style transparan yang seragam
-    const cheatBtn5 = document.createElement('button');
-    cheatBtn5.id = 'cheatLvl5';
-    cheatBtn5.innerText = "⚡ Skip Pertanyaan";
-    cheatBtn5.style.cssText = "position: absolute; bottom: 10px; right: 10px; background: rgba(255, 255, 255, 0.2); color: white; border: 1px dashed rgba(255, 255, 255, 0.5); padding: 5px 10px; border-radius: 20px; font-size: 0.75rem; cursor: pointer; z-index: 100; backdrop-filter: blur(2px);";
-    
-    // 3. Logika auto-benar untuk kuis aktif
-    cheatBtn5.onclick = function() {
-        window.mintaAksesCheat(() => {
-            // Cek apakah kuis masih berjalan dan belum masuk ke screen selebrasi akhir
+    if (window.isCheatUnlocked) {
+        const cheatBtn5 = document.createElement('button');
+        cheatBtn5.id = 'cheatLvl5';
+        cheatBtn5.innerText = "⚡ Skip Soal";
+        cheatBtn5.style.cssText = "position: fixed; bottom: 20px; left: 20px; background: linear-gradient(135deg, #6c757d, #495057); color: white; border: none; padding: 10px 18px; border-radius: 50px; font-weight: bold; font-size: 0.8rem; cursor: pointer; z-index: 9999; box-shadow: 0 4px 10px rgba(0,0,0,0.3);";
+        
+        cheatBtn5.onclick = function() {
             if (currentQuestionIndex < quizData.length) {
                 const currentQuiz = quizData[currentQuestionIndex];
-                
-                // Set status jawaban menjadi benar agar saat modal ditutup, index bertambah
                 isCorrectAnswer = true;
-                
-                // Tampilkan popup sweet message bawaan kodemu secara otomatis
                 showQuizPopup("🥰", currentQuiz.sweetMsg, "Lanjut Soal Berikutnya ❤️");
-                
-                // Jika ini adalah pertanyaan terakhir (ke-6), hapus tombol cheat dari layar
                 if (currentQuestionIndex === quizData.length - 1) {
                     cheatBtn5.remove();
                 }
             }
-        });
-    };
-
-    // 4. Tempelkan tombol ke dalam quizBox parent agar melayang presisi di dalam area kuis
-    if (quizBox) {
-        quizBox.appendChild(cheatBtn5);
+        };
+        document.body.appendChild(cheatBtn5);
     }
-    // =========================================================================
 
     function startFireworks() {
         const canvas = document.getElementById('fireworksCanvas');

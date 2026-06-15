@@ -378,12 +378,31 @@ window.showGlobalGamePopup = function(icon, title, message, nextLevel) {
 };
 
 // =========================================================================
-// GLOBAL CHEAT PROTECTION ENGINE (PIN: 16062008)
+// GLOBAL CHEAT MANAGEMENT SYSTEM (SAYANG DINDA VERSION)
 // =========================================================================
-window.mintaAksesCheat = function(callbackSukses) {
-    const pinInput = prompt("?? Masukkan PIN Rahasia Alwy untuk mengaktifkan cheat:");
+window.isCheatUnlocked = false; // Status awal cheat terkunci
+
+// Fungsi pemicu di halaman Birthday Journey
+window.bukaAksesCheatGlobal = function() {
+    if (window.isCheatUnlocked) {
+        alert("? Status: Cheat kamu sudah aktif kok, Tinggal main aja~ ??");
+        return;
+    }
+    
+    const pinInput = prompt("?? Masukkan PIN Rahasia untuk membuka mode Cheat:");
     if (pinInput === "16062008") {
-        callbackSukses();
+        window.isCheatUnlocked = true;
+        alert("?? Mode Cheat Berhasil Diaktifkan! Semua tombol skip di dalam game sekarang sudah terbuka gratis. ???");
+        
+        // Refresh level yang sedang aktif saat ini agar tombol cheat-nya langsung muncul seketika
+        const activeScreen = document.querySelector('.screen.active');
+        if (activeScreen) {
+            if (activeScreen.id === 'game1-screen' && typeof window.startLevel1 === 'function') window.startLevel1();
+            if (activeScreen.id === 'game2-screen' && typeof window.startLevel2 === 'function') window.startLevel2();
+            if (activeScreen.id === 'game3-screen' && typeof window.startLevel3 === 'function') window.startLevel3();
+            if (activeScreen.id === 'game4-screen' && typeof window.startLevel4 === 'function') window.startLevel4();
+            if (activeScreen.id === 'game5-screen' && typeof window.startLevel5 === 'function') window.startLevel5();
+        }
     } else if (pinInput !== null) {
         alert("? PIN Salah! Kamu bukan Alwy ya? Ngaku! ??");
     }

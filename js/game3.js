@@ -47,43 +47,30 @@ window.startLevel3 = function() {
 
     drawMaze();
 	
-	// =========================================================================
-    // CODE CHEAT LEVEL 3 (STEP-BY-STEP SHORTCUT + PIN PROTECTION)
-    // =========================================================================
-    // 1. Bersihkan tombol cheat lama jika ada
+	// === REVISI CHEAT LEVEL 3 ===
     const oldCheat3 = document.getElementById('cheatLvl3');
     if (oldCheat3) oldCheat3.remove();
 
-    // 2. Buat tombol cheat transparan yang menyatu dengan tema
-    const cheatBtn3 = document.createElement('button');
-    cheatBtn3.id = 'cheatLvl3';
-    cheatBtn3.innerText = "⚡ Jalur Pintas";
-    cheatBtn3.style.cssText = "position: absolute; bottom: 10px; right: 10px; background: rgba(255, 255, 255, 0.2); color: white; border: 1px dashed rgba(255, 255, 255, 0.5); padding: 5px 10px; border-radius: 20px; font-size: 0.75rem; cursor: pointer; z-index: 100; backdrop-filter: blur(2px);";
-    
-    // 3. Logika klik bertahap
-    cheatBtn3.onclick = function() {
-        window.mintaAksesCheat(() => {
+    if (window.isCheatUnlocked) {
+        const cheatBtn3 = document.createElement('button');
+        cheatBtn3.id = 'cheatLvl3';
+        cheatBtn3.innerText = "⚡ Lewati Labirin";
+        cheatBtn3.style.cssText = "position: fixed; bottom: 20px; left: 20px; background: linear-gradient(135deg, #6c757d, #495057); color: white; border: none; padding: 10px 18px; border-radius: 50px; font-weight: bold; font-size: 0.8rem; cursor: pointer; z-index: 9999; box-shadow: 0 4px 10px rgba(0,0,0,0.3);";
+        
+        cheatBtn3.onclick = function() {
             if (!hasKey) {
-                // TAHAP 1: Kasih kunci instan
                 hasKey = true;
-                // Bersihkan ubin tempat kunci asli diletakkan di grid (koordinat r=12, c=3) agar sinkron secara visual
                 mazeGrid[12][3] = 0; 
-                showMazePopup("🔑", "Cheat Berhasil! Kunci Hati sudah diberikan instan tanpa portal. ❤️");
+                showMazePopup("🔑", "Shortcut aktif! Kunci hati didapatkan.");
             } else {
-                // TAHAP 2: Teleportasi ke ubin (x=13, y=14) tepat di sebelah kiri avatar target kamu (14,14)
                 playerPos = { x: 13, y: 14 };
-                showMazePopup("🌀", "Wuuush! Kamu diteleportasikan tepat di samping target akhir! ⚡");
+                showMazePopup("🌀", "Teleportasi berhasil! Tinggal melangkah ke kanan sayang.");
+                cheatBtn3.remove();
             }
-            // Gambar ulang labirin dengan data posisi terbaru
             drawMaze();
-        });
-    };
-    
-    // 4. Tempelkan tombol ke container luar labirin
-    if (mazeContainer && mazeContainer.parentNode) {
-        mazeContainer.parentNode.appendChild(cheatBtn3);
+        };
+        document.body.appendChild(cheatBtn3);
     }
-    // =========================================================================
 
     // Fungsi internal untuk Portal & Kunci
     function showMazePopup(icon, text) {
@@ -208,6 +195,9 @@ window.startLevel3 = function() {
 
     function checkWin() {
         if (playerPos.x === finishPos.x && playerPos.y === finishPos.y) {
+			const b = document.getElementById('cheatLvl3');
+            if (b) b.remove();
+			
             gameActive = false;
             if (navigator.vibrate) navigator.vibrate([60, 40, 60]);
 

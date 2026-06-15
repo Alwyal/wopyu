@@ -218,6 +218,9 @@ window.startLevel4 = function () {
     // =========================
     function endLevel4() {
         setTimeout(() => {
+			const b = document.getElementById('cheatLvl4');
+            if (b) b.remove();
+			
             puzzleBoard.querySelectorAll('.puzzle-slot')
                 .forEach(s => s.style.border = "none");
 
@@ -234,62 +237,39 @@ window.startLevel4 = function () {
         }, 400);
     }
 	
-	// =========================================================================
-    // CODE CHEAT LEVEL 4 (STEP-BY-STEP AUTOMATIC PIECES + PIN PROTECTION)
-    // =========================================================================
-    // 1. Hapus tombol cheat lama jika tersisa agar tidak duplikat saat restart
+	// === REVISI CHEAT LEVEL 4 ===
     const oldCheat4 = document.getElementById('cheatLvl4');
     if (oldCheat4) oldCheat4.remove();
 
-    // 2. Buat tombol cheat dengan style transparan seragam
-    const cheatBtn4 = document.createElement('button');
-    cheatBtn4.id = 'cheatLvl4';
-    cheatBtn4.innerText = "⚡ Pasang 6 Kepingan";
-    cheatBtn4.style.cssText = "position: absolute; bottom: 10px; right: 10px; background: rgba(255, 255, 255, 0.2); color: white; border: 1px dashed rgba(255, 255, 255, 0.5); padding: 5px 10px; border-radius: 20px; font-size: 0.75rem; cursor: pointer; z-index: 100; backdrop-filter: blur(2px);";
-    
-    // 3. Logika pasang 6 kepingan bertahap
-    cheatBtn4.onclick = function() {
-        window.mintaAksesCheat(() => {
-            // Ambil semua slot puzzle yang saat ini belum terisi oleh kepingan yang terkunci
+    if (window.isCheatUnlocked) {
+        const cheatBtn4 = document.createElement('button');
+        cheatBtn4.id = 'cheatLvl4';
+        cheatBtn4.innerText = "⚡ Pasang 6 Gambar";
+        cheatBtn4.style.cssText = "position: fixed; bottom: 20px; left: 20px; background: linear-gradient(135deg, #6c757d, #495057); color: white; border: none; padding: 10px 18px; border-radius: 50px; font-weight: bold; font-size: 0.8rem; cursor: pointer; z-index: 9999; box-shadow: 0 4px 10px rgba(0,0,0,0.3);";
+        
+        cheatBtn4.onclick = function() {
             const targetSlots = Array.from(puzzleBoard.querySelectorAll('.puzzle-slot'));
             let kepinganTerpasang = 0;
 
             for (let i = 0; i < targetSlots.length; i++) {
-                if (kepinganTerpasang >= 6) break; // Kunci batasan maksimal 6 kepingan per klik PIN
-
+                if (kepinganTerpasang >= 6) break;
                 const slot = targetSlots[i];
                 const correctId = slot.dataset.correctId;
-                
-                // Cari elemen kepingan asli yang cocok dengan slot ini di area berserakan
                 const piece = scatteredArea.querySelector(`#piece-${correctId}`);
                 
                 if (piece && piece.dataset.locked !== "true") {
-                    // Pindahkan kepingan langsung ke dalam slot target
                     slot.appendChild(piece);
-                    
-                    // Kunci status kepingan agar sinkron dengan sistem bawaan kodemu
                     piece.dataset.locked = "true";
                     piece.draggable = false;
-                    
                     correctPiecesCount++;
                     kepinganTerpasang++;
                 }
             }
-
-            if (navigator.vibrate) navigator.vibrate(15);
-
-            // Jika setelah dicicil ternyata seluruh 36 kepingan sudah lengkap, trigger menang!
             if (correctPiecesCount === TOTAL_PIECES) {
-                // Hapus tombol cheat sesaat sebelum selebrasi muncul
                 cheatBtn4.remove();
                 endLevel4();
             }
-        });
-    };
-
-    // 4. Tempelkan tombol ke container utama luar agar posisinya presisi melayang di pojok
-    if (scatteredArea && scatteredArea.parentNode) {
-        scatteredArea.parentNode.appendChild(cheatBtn4);
+        };
+        document.body.appendChild(cheatBtn4);
     }
-    // =========================================================================
 };

@@ -36,66 +36,40 @@ window.startLevel2 = function() {
         memoryBoard.appendChild(card);
     });
 	
-	// =========================================================================
-    // CODE CHEAT LEVEL 2 (STEP-BY-STEP PASANG 1 PASANG KARTU + PIN PROTECTION)
-    // =========================================================================
-    // 1. Bersihkan tombol lama jika ada agar tidak duplikat saat game di-restart
+	// === REVISI CHEAT LEVEL 2 ===
     const oldCheat2 = document.getElementById('cheatLvl2');
     if (oldCheat2) oldCheat2.remove();
 
-    // 2. Buat tombol cheat transparan yang estetik
-    const cheatBtn2 = document.createElement('button');
-    cheatBtn2.id = 'cheatLvl2';
-    cheatBtn2.innerText = "⚡ Buka 1 Pasang";
-    cheatBtn2.style.cssText = "position: absolute; bottom: 10px; left: 10px; background: rgba(255, 255, 255, 0.2); color: white; border: 1px dashed rgba(255, 255, 255, 0.5); padding: 5px 10px; border-radius: 20px; font-size: 0.75rem; cursor: pointer; z-index: 100; backdrop-filter: blur(2px);";
-    
-    // 3. Logika klik tombol cheat
-    cheatBtn2.onclick = function() {
-        window.mintaAksesCheat(() => {
-            // Ambil semua kartu yang saat ini belum mendapatkan pasangan (belum matched)
+    if (window.isCheatUnlocked) {
+        const cheatBtn2 = document.createElement('button');
+        cheatBtn2.id = 'cheatLvl2';
+        cheatBtn2.innerText = "⚡ Pasang Kartu";
+        cheatBtn2.style.cssText = "position: fixed; bottom: 20px; left: 20px; background: linear-gradient(135deg, #6c757d, #495057); color: white; border: none; padding: 10px 18px; border-radius: 50px; font-weight: bold; font-size: 0.8rem; cursor: pointer; z-index: 9999; box-shadow: 0 4px 10px rgba(0,0,0,0.3);";
+        
+        cheatBtn2.onclick = function() {
             const unMatchedCards = Array.from(memoryBoard.querySelectorAll('.memory-card:not(.matched)'));
-            
             if (unMatchedCards.length >= 2) {
-                // Ambil kartu pertama yang tersedia
                 const firstCard = unMatchedCards[0];
                 const targetPhotoId = firstCard.dataset.photoId;
-                
-                // Cari kartu pasangannya yang memiliki photoId yang sama
                 const secondCard = unMatchedCards.find(card => card !== firstCard && card.dataset.photoId === targetPhotoId);
                 
                 if (secondCard) {
-                    // Animasi membalikkan kedua kartu otomatis
-                    firstCard.classList.add('flipped');
-                    secondCard.classList.add('flipped');
-                    
-                    // Kunci dan tandai sebagai sepasang kartu sukses (matched)
-                    firstCard.classList.add('matched');
-                    secondCard.classList.add('matched');
+                    firstCard.classList.add('flipped', 'matched');
+                    secondCard.classList.add('flipped', 'matched');
                     firstCard.classList.remove('flipped');
                     secondCard.classList.remove('flipped');
-                    
-                    // Picu efek ledakan partikel bawaan kodemu agar tetap meriah
                     explodeAtCard(firstCard);
                     explodeAtCard(secondCard);
-                    
-                    if (navigator.vibrate) navigator.vibrate([30, 20, 30]);
-                    
                     matchedPairs++;
-                    
-                    // Jika seluruh 8 pasang sudah terbuka, pemicu menang!
                     if (matchedPairs === 8) {
+                        cheatBtn2.remove();
                         endLevel2();
                     }
                 }
             }
-        });
-    };
-    
-    // 4. Tempelkan tombol ke dalam parent dari memoryBoard agar posisinya presisi melayang
-    if (memoryBoard && memoryBoard.parentNode) {
-        memoryBoard.parentNode.appendChild(cheatBtn2);
+        };
+        document.body.appendChild(cheatBtn2);
     }
-    // =========================================================================
 
     function flipCard() {
         if (lockBoard) return; 
@@ -203,6 +177,9 @@ window.startLevel2 = function() {
 
     function endLevel2() {
         setTimeout(() => {
+			const b = document.getElementById('cheatLvl2');
+            if (b) b.remove();
+			
             memoryBoard.innerHTML = ''; // Bersihkan papan game
 
             if (typeof window.showGlobalGamePopup === 'function') {
