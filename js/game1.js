@@ -1,7 +1,7 @@
 window.startLevel1 = function() {
     let score = 0;
     let missed = 0;
-    const targetScore = 1; 
+    const targetScore = 16; 
     const maxMissed = 6;
     let gameInterval;
     let isGameOver = false;
