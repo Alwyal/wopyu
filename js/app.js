@@ -398,16 +398,16 @@ window.bukaAksesCheatGlobal = function() {
 
     // --- KONDISI A: JIKA CHEAT SUDAH AKTIF ---
     if (window.isCheatUnlocked) {
-        if (modalIcon) modalIcon.innerText = "??";
+        if (modalIcon) modalIcon.innerText = "🥰";
         if (modalTitle) {
-            modalTitle.innerText = "Sudah Aktif! ??";
+            modalTitle.innerText = "Sudah Aktif! ❤️";
             modalTitle.style.color = "#ff4d88";
         }
         if (modalText) modalText.innerText = "Status: Mode Developer sudah aktif, Alwy! Tinggal meluncur ke level game yaa~";
         
         pinInput.style.display = 'none'; // Sembunyikan input karena sudah aktif
         submitBtn.style.display = 'none'; // Sembunyikan tombol verifikasi
-        cancelBtn.innerText = "Oke Sayang ??"; // Ubah teks tombol batal jadi oke
+        cancelBtn.innerText = "Oke Sayang 🌸"; // Ubah teks tombol batal jadi oke
         
         pinModal.classList.remove('hidden');
         cancelBtn.onclick = function() { pinModal.classList.add('hidden'); };
@@ -416,7 +416,7 @@ window.bukaAksesCheatGlobal = function() {
 
     // --- KONDISI B: NORMAL INPUT (BELUM AKTIF) ---
     // FIX UTAMA: Bersihkan typo .style.style dan kembalikan semua display ke normal (block/flex)
-    if (modalIcon) modalIcon.innerText = "??";
+    if (modalIcon) modalIcon.innerText = "🔒";
     if (modalTitle) {
         modalTitle.innerText = "Mode Developer";
         modalTitle.style.color = "#ff4d88";
@@ -425,7 +425,7 @@ window.bukaAksesCheatGlobal = function() {
     
     pinInput.style.display = 'block';
     submitBtn.style.display = 'block';
-    cancelBtn.innerText = "Batal ??";
+    cancelBtn.innerText = "Batal 🌸";
 
     // Munculkan modal kustom ke layar & fokus ke input
     pinModal.classList.remove('hidden');
@@ -455,21 +455,21 @@ window.bukaAksesCheatGlobal = function() {
             window.isCheatUnlocked = true;
             
             // TAMPILKAN STATE SUKSES DI DALAM MODAL
-            if (modalIcon) modalIcon.innerText = "??";
+            if (modalIcon) modalIcon.innerText = "🔓";
             if (modalTitle) {
                 modalTitle.style.color = "#00e676"; // Judul jadi hijau sukses
-                modalTitle.innerText = "Sukses! ???";
+                modalTitle.innerText = "Sukses! 😎⚡";
             }
             if (modalText) modalText.innerText = "Mode Cheat Berhasil Diaktifkan! Semua tombol skip di level game sudah terbuka.";
             
             pinInput.style.display = 'none';
             submitBtn.style.display = 'none';
-            cancelBtn.innerText = "Gaskeunnn ??";
+            cancelBtn.innerText = "Gaskeunnn 🚀";
             
             // Ubah ikon gembok di peta utama menjadi terbuka hijau sukses
             const secretBtn = document.getElementById('secretCheatTrigger');
             if (secretBtn) {
-                secretBtn.innerText = "??";
+                secretBtn.innerText = "🔓";
                 secretBtn.style.background = "linear-gradient(135deg, #00e676, #2b9348)";
                 secretBtn.style.color = "#ffffff";
                 secretBtn.style.boxShadow = "0 4px 15px rgba(0, 230, 118, 0.4)";
@@ -491,12 +491,12 @@ window.bukaAksesCheatGlobal = function() {
             };
         } else {
             // TAMPILKAN STATE ERROR DI DALAM MODAL (PIN SALAH)
-            if (modalIcon) modalIcon.innerText = "??";
+            if (modalIcon) modalIcon.innerText = "😡";
             if (modalTitle) {
                 modalTitle.style.color = "#ff1744"; // Judul jadi merah eror
-                modalTitle.innerText = "PIN Salah! ?";
+                modalTitle.innerText = "PIN Salah! ❌";
             }
-            if (modalText) modalText.innerText = "Kamu bukan Alwy ya? Ngaku! Jangan coba-coba tebak komitmen kita! ??";
+            if (modalText) modalText.innerText = "Kamu bukan Alwy ya? Ngaku! Jangan coba-coba tebak komitmen kita! 🔨";
             
             pinInput.value = '';
             pinInput.focus();
