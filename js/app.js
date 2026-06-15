@@ -380,7 +380,6 @@ window.showGlobalGamePopup = function(icon, title, message, nextLevel) {
 // =========================================================================
 // GLOBAL CHEAT MANAGEMENT SYSTEM (SAYANG DINDA VERSION)
 // =========================================================================
-window.isCheatUnlocked = falsewindow.bukaAksesCheatGlobal; // Status awal cheat terkunci
 window.isCheatUnlocked = false; // Status awal cheat terkunci
 
 window.bukaAksesCheatGlobal = function() {
